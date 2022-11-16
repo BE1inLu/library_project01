@@ -134,6 +134,30 @@ body {
     background-color: rgb(255, 145, 0);
 }
 
+.user p{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.user .button{
+    cursor: pointer;
+    background-color: #3498db;
+    border: 1px solid #3498db;
+    color: #fff;
+    display: block;
+    font-size: 12px;
+    padding: 10px;
+    margin-left: 80px;
+    margin-top: 180px;
+    width: 40%;
+}
+
+.user .button:hover{
+    background-color: #aaa;
+    border: 1px solid #aaa;
+    color: #000; 
+}
+
 
 
 
