@@ -12,7 +12,7 @@ public class dao {
         user resultUser=null;
 
         //数据库指令
-        String sql="select * from text01 where username=? and password=?";
+        String sql="select * from user where username=? and password=?";
 
         //获得对象
         PreparedStatement pst=conn.prepareStatement(sql);
@@ -35,7 +35,7 @@ public class dao {
         
         boolean flag=false;
 
-        String sql="insert into text01(username,password,mail,tel,sex) VALUES(?,?,?,?,?)";
+        String sql="insert into user(username,password,mail,tel,sex) VALUES(?,?,?,?,?)";
         PreparedStatement pst=conn.prepareStatement(sql);
 
         pst.setString(1, user.getUsername());
