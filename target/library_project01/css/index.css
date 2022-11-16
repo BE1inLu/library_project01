@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.head {
+    padding: 20px;
+    margin: 0 auto;
+    background-color: #777;
+    /* position: absolute; */
+    top: auto;
+}
+
+.banner {
+    margin: 0 auto;
+    width: 200vh;
+    height: 80px;
+    /* min-width: 10vh;
+    max-width: max-content; */
+}
+
+.bannerboard {
+    padding: 0;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    height: 34px;
+    text-align: left;
+    font-size: 26px;
+    font-weight: bold;
+    color: white;
+}
+
+.nav {
+    float: left;
+}
+
+.nav ul {
+    list-style: none;
+}
+
+.nav ul li {
+    float: left;
+    width: 100px;
+    line-height: 46px;
+    /* border-left: 1px solid #fff; */
+    position: relative;
+    top: 0;
+    overflow: hidden;
+    transition: all .5s;
+}
+
+.nav ul li a {
+    display: block;
+    height: 46px;
+    /*这里注意要和li里面的高一致*/
+    text-decoration: none;
+    color: #000;
+    text-align: center;
+}
+
+.nav ul li a:current {
+    color: white;
+    background-color: rgb(255, 154, 1);
+}
+
+.nav ul li a:hover,
+.nav ul li:hover {
+    color: white;
+    top: -5px;
+    border: 1px solid #fff;
+    box-shadow: 10px 10px 15px #aaa;
+}
+
+body {
+    box-sizing: border-box;
+}
+
+.main{
+    height: 800px;
+    background-color: rgb(255, 154, 1);
+}
+
+.frame{
+    position: relative;
+    margin: 0 auto;
+    padding-top: 300px;
+    padding-left: 50px;
+}
+
+.frame input,.frame a{
+    cursor: pointer;
+    background-color: #3498db;
+    border: 1px solid #3498db;
+    border-radius: 4px;
+    color: #fff;
+    display: block;
+    font-size: 16px;
+    padding: 10px;
+    margin-top: 20px;
+    width: 10%;
+}
+
+.frame a:hover,.frame input:hover{
+    border: 1px solid #000;
+    background-color: #fff;
+    color: #000;
+}
+
+.foot{
+    
+    margin: 0 auto;
+    background-color: #777;
+    bottom: 0;
+}
+
+.foottitle{
+    margin: 0 auto;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    text-align: center;
+    font-size: medium;
+}

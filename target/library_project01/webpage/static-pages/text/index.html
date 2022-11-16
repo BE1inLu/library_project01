@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>textDoc</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+
+    <div class="head">
+        <!-- 头部导航栏+标题栏 -->
+        <div class="banner">
+            <div class="bannerboard">图书馆管理系统</div>
+            <div class="nav">
+                <ul>
+                    <li><a href="#">个人主页</a></li>
+                    <li><a href="#">借阅查询</a></li>
+                    <li><a href="#">借阅申请</a></li>
+                    <li><a href="#">还书申请</a></li>
+                    <li><a href="#">个人设置</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="frame">
+
+            <input type="button" value="login" onclick="text00()" />
+            <input type="button" value="regist" onclick="text01()" />
+
+        </div>
+        <script type="text/javascript">
+            function text00() {
+                window.location('./webpage/static-pages/login.html');
+            }
+            function text01() {
+                window.location('./webpage/static-pages/regist.html');
+            }
+        </script>
+    </div>
+
+    <div class="foot">
+        <div class="foottitle">图书管理系统</div>
+    </div>
+
+</body>
+
+</html>
