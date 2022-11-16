@@ -97,6 +97,17 @@ body {
     margin-right: 30px;
 }
 
+.item{
+    border:2px solid #777;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.item1{
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
 .middle .title1{
     margin-top: 10px;
 }
