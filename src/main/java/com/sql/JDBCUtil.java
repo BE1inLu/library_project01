@@ -6,7 +6,7 @@ import java.sql.*;
 public class JDBCUtil {
     //用的是8.0数据库驱动，所以driver要修改成com.mysql.cj.jdbc.Driver
     private final static String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private final static String URL1 = "jdbc:mysql://localhost:3306/textsql01?useSSL=false&serverTimezone=Hongkong&characterEncoding=utf-8&autoReconnect=true";
+    private final static String URL1 = "jdbc:mysql://localhost:3306/library_project?useSSL=false&serverTimezone=Hongkong&characterEncoding=utf-8&autoReconnect=true";
     private final static String SQL_USER = "root";
     private final static String SQL_PASSWD = "0909";
 
