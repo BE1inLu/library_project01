@@ -58,10 +58,22 @@ public class dao {
     // TODO：user数据库操作，回传user数据库信息
 
     // TODO：book数据库操作，展示书籍列表
+    public book see_book(Connection conn,book book)throws Exception{
+        book book1=null;
+        String sql="select * from book";
+        PreparedStatement pst=conn.prepareStatement(sql);
+        ResultSet rs=pst.executeQuery();
+        while (rs.next()) {
+            book1=new book();
+            book1.setBookid(rs.getInt("bookid"));
+            book1.setBookname(rs.getString("bookname"));
+        }
+        return book1;
+    }
 
-    // TODO：book数据库操作，接收书籍名，回传书籍借阅情况
-    public book[] getBook(Connection conn, book book) throws Exception {
-        book newbook[] = null;
+    // book数据库操作--接收书籍名，回传书籍借阅情况
+    public book getBook(Connection conn, book book) throws Exception {
+        book newbook = null;
         String sql = "select * from book where bookname=?";
 
         PreparedStatement pst = conn.prepareStatement(sql);
@@ -69,7 +81,11 @@ public class dao {
 
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
-
+            newbook=new book();
+            newbook.setBookname(rs.getString("bookname"));
+            newbook.setBorrow_num(rs.getInt("borrow_num"));
+            newbook.setReceive_num(rs.getInt("receive_num"));
+            newbook.setDepot(rs.getInt("depot"));
         }
 
         return newbook;
