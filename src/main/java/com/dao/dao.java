@@ -58,13 +58,13 @@ public class dao {
     // TODO：user数据库操作，回传user数据库信息
 
     // TODO：book数据库操作，展示书籍列表
-    public book see_book(Connection conn,book book)throws Exception{
-        book book1=null;
-        String sql="select * from book";
-        PreparedStatement pst=conn.prepareStatement(sql);
-        ResultSet rs=pst.executeQuery();
+    public book see_book(Connection conn, book book) throws Exception {
+        book book1 = null;
+        String sql = "select * from book";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
         while (rs.next()) {
-            book1=new book();
+            book1 = new book();
             book1.setBookid(rs.getInt("bookid"));
             book1.setBookname(rs.getString("bookname"));
         }
@@ -81,7 +81,7 @@ public class dao {
 
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
-            newbook=new book();
+            newbook = new book();
             newbook.setBookname(rs.getString("bookname"));
             newbook.setBorrow_num(rs.getInt("borrow_num"));
             newbook.setReceive_num(rs.getInt("receive_num"));
@@ -90,5 +90,7 @@ public class dao {
 
         return newbook;
     }
+
+    // TODO:booklog数据库操作
 
 }

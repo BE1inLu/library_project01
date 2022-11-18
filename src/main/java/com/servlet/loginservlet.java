@@ -38,8 +38,9 @@ public class loginservlet extends HttpServlet {
                 Connection conn = db.getConn();
 
                 if (dao.login(conn, user) != null) {
-                    req.getSession().setAttribute("user", user);
-                    resp.sendRedirect("./homepage.html");
+                    req.getSession().setAttribute("username", user.getUsername());
+                    // req.getSession().setAttribute("usersex", user.getSex());
+                    resp.sendRedirect("../jsp-pages/page-jsp/homepage/homepage.jsp");
                 } else {
                     System.out.println("error user");
                     resp.setHeader("refresh", "1;url=./login.html");

@@ -1,5 +1,5 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
-<link rel="stylesheet" type="text/css" href="./css/head.css">
+<%-- <link rel="stylesheet" type="text/css" href="./css/head.css"> --%>
 <div class="head">
     <!-- 头部导航栏+标题栏 -->
     <div class="banner">

@@ -1,5 +1,11 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.user.*"%>
+
+<%
+    //TODO:book1窗口动态元素
+%>
+
 
 <html lang="en">
 
@@ -9,7 +15,24 @@
 </head>
 
 <body>
-    <%@ include file="./webpage/jsp-pages/mod-jsp/head.jsp" %>
+
+    <%-- <%@ include file="../../mod-jsp/head.jsp" %> --%>
+    <div class="head">
+        <!-- 头部导航栏+标题栏 -->
+        <div class="banner">
+            <div class="bannerboard">图书馆管理系统</div>
+            <div class="nav">
+                <ul>
+                    <li><a href="./homepage.jsp">个人主页</a></li>
+                    <li><a href="#">借阅查询</a></li>
+                    <li><a href="#">借阅申请</a></li>
+                    <li><a href="#">还书申请</a></li>
+                    <li><a href="#">个人设置</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 
     <div class="main">
         <div class="left"></div>
@@ -26,11 +49,12 @@
             <span class="title1">用户信息</span>
             <div class="user">
                 用户名：<%=session.getAttribute("username")%>
-                性别：<%=session.getAttribute("sex")%>
             </div>
         </div>
     </div>
-    <%@ include file="./webpage/jsp-pages/mod-jsp/foot.jsp" %>
+
+    <%@ include file="../../mod-jsp/foot.jsp" %>
+    
 </body>
 
 </html>
