@@ -15,24 +15,7 @@
 </head>
 
 <body>
-
-    <%-- <%@ include file="../../mod-jsp/head.jsp" %> --%>
-    <div class="head">
-        <!-- 头部导航栏+标题栏 -->
-        <div class="banner">
-            <div class="bannerboard">图书馆管理系统</div>
-            <div class="nav">
-                <ul>
-                    <li><a href="./homepage.jsp">个人主页</a></li>
-                    <li><a href="#">借阅查询</a></li>
-                    <li><a href="#">借阅申请</a></li>
-                    <li><a href="#">还书申请</a></li>
-                    <li><a href="#">个人设置</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
+    <%@ include file="../../mod-jsp/head-req.jsp" %>
 
     <div class="main">
         <div class="left"></div>

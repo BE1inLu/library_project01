@@ -27,5 +27,15 @@
     <servlet-name>registservlet</servlet-name>
     <url-pattern>/webpage/static-pages/registservlet</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>bookservlet</servlet-name>
+    <servlet-class>com.servlet.bookservlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>bookservlet</servlet-name>
+    <url-pattern>/webpage/jsp-pages/page-jsp/searchbookpage/bookservlet</url-pattern>
+  </servlet-mapping>
   
 </web-app>

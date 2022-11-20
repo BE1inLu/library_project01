@@ -6,8 +6,12 @@
 .head {
     padding: 20px;
     margin: 0 auto;
-    background-color: #777;
-    /* position: absolute; */
+    background: #00fff0;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #0083fe, #00fff0);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0083fe, #00fff0);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     top: auto;
 }
 
@@ -75,19 +79,20 @@ body {
     box-sizing: border-box;
 }
 
-.main{
+.main {
     height: 800px;
     background-color: #fff;
 }
 
-.frame{
+.frame {
     position: relative;
     margin: 0 auto;
     padding-top: 300px;
     padding-left: 50px;
 }
 
-.frame input,.frame a{
+.frame input,
+.frame a {
     cursor: pointer;
     background-color: #3498db;
     border: 1px solid #3498db;
@@ -100,20 +105,21 @@ body {
     width: 10%;
 }
 
-.frame a:hover,.frame input:hover{
+.frame a:hover,
+.frame input:hover {
     border: 1px solid #000;
     background-color: #fff;
     color: #000;
 }
 
-.foot{
-    
+.foot {
+
     margin: 0 auto;
     background-color: #777;
     bottom: 0;
 }
 
-.foottitle{
+.foottitle {
     margin: 0 auto;
     padding-bottom: 20px;
     padding-top: 20px;

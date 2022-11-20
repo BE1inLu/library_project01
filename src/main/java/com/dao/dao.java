@@ -1,6 +1,9 @@
 package com.dao;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.user.*;
 import com.book.*;
 // import com.sql.JDBCUtil;
@@ -57,38 +60,47 @@ public class dao {
 
     // TODO：user数据库操作，回传user数据库信息
 
-    // TODO：book数据库操作，展示书籍列表
-    public book see_book(Connection conn, book book) throws Exception {
-        book book1 = null;
-        String sql = "select * from book";
+    // book数据库操作，展示书籍列表
+    public List<book> see_book(Connection conn, book book) throws Exception {
+        book book1 = new book();
+        List<book> booklist=new ArrayList<book>();
+        String sql = "select book_id,bookname,bookdepot from book";
         PreparedStatement pst = conn.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
-            book1 = new book();
             book1.setBookid(rs.getInt("bookid"));
             book1.setBookname(rs.getString("bookname"));
+            booklist.add(book1);
         }
-        return book1;
+        return booklist;
     }
 
-    // book数据库操作--接收书籍名，回传书籍借阅情况
-    public book getBook(Connection conn, book book) throws Exception {
-        book newbook = null;
+    // book数据库操作--接收书籍名，回传书籍借阅情况，没有就回传全部在库数目
+    public List<book> getBook(Connection conn, book book) throws Exception {
+        book newbook = new book();
+        List<book> listbook=new ArrayList<book>();
         String sql = "select * from book where bookname=?";
+        String sql1 = "select * from book where depot=1";
+        PreparedStatement pst = null;
 
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, book.getBookname());
+        if (book.getBookname() == null) {
+            pst = conn.prepareStatement(sql1);
+        } else {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, book.getBookname());
+        }
 
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
-            newbook = new book();
+            newbook.setBookid(rs.getInt("bookid"));
             newbook.setBookname(rs.getString("bookname"));
             newbook.setBorrow_num(rs.getInt("borrow_num"));
             newbook.setReceive_num(rs.getInt("receive_num"));
-            newbook.setDepot(rs.getInt("depot"));
+            newbook.setDepot(rs.getBoolean("depot"));
+            listbook.add(book);
         }
 
-        return newbook;
+        return listbook;
     }
 
     // TODO:booklog数据库操作

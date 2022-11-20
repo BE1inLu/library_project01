@@ -7,13 +7,13 @@ public class book {
     String bookname=null;
     int borrow_num=0;
     int receive_num=0;
-    int depot=0;
+    boolean depot=true;
 
     public book(){
         super();
     }
 
-    public book(int bookid,String bookname,int borrow_num,int receive_num,int depot){
+    public book(int bookid,String bookname,int borrow_num,int receive_num,Boolean depot){
         this.bookid=bookid;
         this.bookname=bookname;
         this.borrow_num=borrow_num;
@@ -49,10 +49,10 @@ public class book {
         this.receive_num = receive_num;
     }
 
-    public int getDepot() {
+    public boolean getDepot() {
         return depot;
     }
-    public void setDepot(int depot) {
+    public void setDepot(Boolean depot) {
         this.depot = depot;
     }
 

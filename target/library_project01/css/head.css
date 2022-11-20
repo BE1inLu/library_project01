@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.head {
+    padding: 20px;
+    margin: 0 auto;
+    background: #00fff0;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #0083fe, #00fff0);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #0083fe, #00fff0);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    top: auto;
+}
+
+.banner {
+    margin: 0 auto;
+    width: 200vh;
+    height: 80px;
+    /* min-width: 10vh;
+    max-width: max-content; */
+}
+
+.bannerboard {
+    padding: 0;
+    padding-left: 20px;
+    height: 34px;
+    text-align: left;
+    font-size: 26px;
+    font-weight: bold;
+    color: white;
+}
+
+.nav {
+    float: left;
+}
+
+.nav ul {
+    list-style: none;
+}
+
+.nav ul li {
+    float: left;
+    width: 100px;
+    line-height: 46px;
+    /* border-left: 1px solid #fff; */
+    position: relative;
+    top: 0;
+    overflow: hidden;
+    transition: all .5s;
+}
+
+.nav ul li a {
+    display: block;
+    height: 46px;
+    /*这里注意要和li里面的高一致*/
+    text-decoration: none;
+    color: #000;
+    text-align: center;
+}
+
+.nav ul li a:current {
+    color: white;
+    background-color: rgb(255, 154, 1);
+}
+
+.nav ul li a:hover,
+.nav ul li:hover {
+    color: white;
+    top: -5px;
+    border: 1px solid #fff;
+    box-shadow: 10px 10px 15px #aaa;
+}

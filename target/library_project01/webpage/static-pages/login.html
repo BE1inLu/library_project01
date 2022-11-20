@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/login.css">
+    <!-- todo:loginjs -->
+</head>
+
+<body>
+    <div class="box1">
+        <!-- action更改 -->
+        <form action="loginservlet" class="form" name="form" method="post">
+            <h3>Login</h3>
+            <div class="item">
+                <span>username</span>
+                <input type="text" name="username">
+            </div>
+            <div class="item">
+                <span>password</span>
+                <input type="password" name="password">
+            </div>
+            <div class="item">
+                <button type="submit">Login</button>
+            </div>
+            <div class="item">
+                <span>no regist?click it</span>
+                <input class="regist" type="button" name="regist" value="regist" onclick="text01()" />
+                <script type="text/javascript">
+                    function text01() { 
+                        window.location = "./regist.html"; 
+                    }
+                </script>
+            </div>
+
+        </form>
+    </div>
+</body>
+
+</html>
