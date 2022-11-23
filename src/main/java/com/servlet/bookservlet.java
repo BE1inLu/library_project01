@@ -21,18 +21,28 @@ public class bookservlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        req.setCharacterEncoding("utf-8");
         String bookname = req.getParameter("bookname");
 
-        JDBCUtil db = new JDBCUtil();
-        book newbook = new book();
-        List<book> booklist = null;
-        dao dao = new dao();
+        book newbook=new book();
         newbook.setBookname(bookname);
+
+        JDBCUtil db = new JDBCUtil();
+        List<book> booklist = null;
+
+        dao dao = new dao();
 
         try {
             Connection conn = db.getConn();
             booklist = dao.getBook(conn, newbook);
+            // 测试
+            System.out.println(booklist.get(0).getBookname());
+
             req.getSession().setAttribute("booklist", booklist);
+
+            //text code
+            System.out.println("==servlet======");
+            System.out.println("回传booklist成功");
             conn.close();
 
         } catch (Exception e) {

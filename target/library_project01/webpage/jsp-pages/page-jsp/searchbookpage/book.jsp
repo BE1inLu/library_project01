@@ -1,6 +1,6 @@
-<%@ page contentType="text/html" language="Java" pageEncoding="UTF-8"  %>
-
-<form action="bookservlet" method="post">
+<%@ page contentType="text/html" language="Java" pageEncoding="UTF-8"%>
+<%-- 废弃 --%>
+<form action="#" method="post">
     <div class="book-title">
         <span class="title1">书籍查询</span>
         <div class="input-user">

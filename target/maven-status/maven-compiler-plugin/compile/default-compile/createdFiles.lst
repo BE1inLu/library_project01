@@ -1,3 +1,4 @@
+com\bean\bookbean.class
 com\user\user.class
 com\book\book.class
 com\servlet\loginservlet.class
@@ -5,4 +6,3 @@ com\dao\dao.class
 com\servlet\bookservlet.class
 com\sql\JDBCUtil.class
 com\servlet\registservlet.class
-com\sql\sqlfunc.class

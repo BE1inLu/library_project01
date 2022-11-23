@@ -61,6 +61,4 @@ public class book {
         return "bookid="+bookid+",bookname="+bookname+",=borrow_num="+borrow_num+",receive_num="+receive_num+",depot="+depot;
     }
 
-
-    
 }
