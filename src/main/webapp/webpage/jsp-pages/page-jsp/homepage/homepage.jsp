@@ -2,11 +2,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.user.*"%>
 
-<%
-    //TODO:book1窗口动态元素
-%>
-
-
 <html lang="en">
 
 <head>
@@ -20,8 +15,11 @@
     <div class="main">
         <div class="left"></div>
         <div class="middle">
+            <%-- 外部include --%>
             <span class="title1">在借书籍</span>
             <div class="book1">窗口1</div>
+
+            <%-- 外部include --%>
             <span class="title1">阅读记录</span>
             <div class="booklog">窗口2</div>
 
