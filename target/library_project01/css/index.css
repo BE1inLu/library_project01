@@ -107,6 +107,7 @@ body {
 
 .frame a:hover,
 .frame input:hover {
+    transition-duration: 0.4s;
     border: 1px solid #000;
     background-color: #fff;
     color: #000;

@@ -63,7 +63,7 @@ public class dao {
     // book数据库操作，展示书籍列表
     public List<book> see_book(Connection conn, book book) throws Exception {
         book book1 = new book();
-        List<book> booklist=new ArrayList<book>();
+        List<book> booklist = new ArrayList<book>();
         String sql = "select book_id,bookname,bookdepot from book";
         PreparedStatement pst = conn.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
@@ -77,11 +77,9 @@ public class dao {
 
     // book数据库操作--接收书籍名，回传书籍借阅情况，没有就回传全部在库数目
     public List<book> getBook(Connection conn, book book) throws Exception {
-        
-        book newbook = new book();
 
-        List<book> listbook=new ArrayList<book>();
-        String sql = "select * from book where bookname=?";
+        List<book> listbook = new ArrayList<book>();
+        String sql = "select * from book where bookname= ?";
         String sql1 = "select * from book where depot=01";
         PreparedStatement pst = null;
 
@@ -89,19 +87,21 @@ public class dao {
             pst = conn.prepareStatement(sql1);
         } else {
             pst = conn.prepareStatement(sql);
-            pst.setString(1, newbook.getBookname());
+            pst.setString(1, book.getBookname());
         }
 
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
 
-            //text code
-            System.out.println("回传数据==========");
-            System.out.println("bookid:"+rs.getInt("bookid"));
-            System.out.println("bookname:"+rs.getString("bookname"));
-            System.out.println("borrow-num:"+rs.getInt("borrow-num"));
-            System.out.println("receive-num:"+rs.getInt("receive-num"));
-            System.out.println("depot:"+rs.getBoolean("depot"));
+            book newbook = new book();
+
+            // text code
+            // System.out.println("回传数据==========");
+            // System.out.println("bookid:"+rs.getInt("bookid"));
+            // System.out.println("bookname:"+rs.getString("bookname"));
+            // System.out.println("borrow-num:"+rs.getInt("borrow-num"));
+            // System.out.println("receive-num:"+rs.getInt("receive-num"));
+            // System.out.println("depot:"+rs.getBoolean("depot"));
 
             newbook.setBookid(rs.getInt("bookid"));
             newbook.setBookname(rs.getString("bookname"));
@@ -109,13 +109,14 @@ public class dao {
             newbook.setReceive_num(rs.getInt("receive-num"));
             newbook.setDepot(rs.getBoolean("depot"));
             listbook.add(newbook);
-            //text code
-            System.out.println("添加书本成功");
+
+            // //text code
+            // System.out.println("添加书本成功");
         }
 
-        //text code
-        System.out.println("=========");
-        System.out.println("dao操作获取数据成功");
+        // text code
+        // System.out.println("=========");
+        // System.out.println("dao操作获取数据成功");
         // System.out.println("bookname:"+book.getBookname());
         // System.out.println(newbook.getBookname());
         // System.out.println(listbook.get(1).getBookname());

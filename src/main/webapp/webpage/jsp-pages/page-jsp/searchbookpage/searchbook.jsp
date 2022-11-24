@@ -16,7 +16,7 @@
 
     <%-- 主体窗口 --%>
     <div class="main">
-        <div class="left"></div>
+        <%-- <div class="left"></div> --%>
         <div class="middle">
             <%-- <%@ include file="book.jsp" %> --%>
             <div class="book-title">
@@ -31,7 +31,8 @@
             <%-- <%@ include file="input-book.jsp"%> --%>
             <jsp:include page="input-book.jsp" flush="true"/>
         </div>
-        <div class="right"></div>
+        
+        <%-- <div class="right"></div> --%>
     </div>
     
     <%-- 底栏 --%>

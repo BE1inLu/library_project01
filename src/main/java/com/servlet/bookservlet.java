@@ -35,14 +35,21 @@ public class bookservlet extends HttpServlet {
         try {
             Connection conn = db.getConn();
             booklist = dao.getBook(conn, newbook);
-            // 测试
-            System.out.println(booklist.get(0).getBookname());
+            
+            // text code
+            // System.out.println(booklist.get(1).getBookname());
+            // System.out.println(booklist.get(2).getBookname());
+            // System.out.println(booklist.get(3).getBookname());
 
+            //回传booklist
             req.getSession().setAttribute("booklist", booklist);
 
             //text code
-            System.out.println("==servlet======");
-            System.out.println("回传booklist成功");
+            // System.out.println("==servlet======");
+            // System.out.println("回传的书籍名："+bookname);
+            // System.out.println("newbook->name:"+newbook.getBookname());
+            // System.out.println("回传booklist成功");  
+
             conn.close();
 
         } catch (Exception e) {
