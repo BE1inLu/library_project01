@@ -2,8 +2,6 @@ package com.booklog;
 
 import java.util.Date;
 
-import com.book.book;
-import com.user.user;
 
 public class booklog {
     // booklog的java类
