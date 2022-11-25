@@ -2,75 +2,59 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" type="text/css" href="../../../css/searchbook.css" />
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../../../css/borrowpage.css" />
 </head>
 
 <body>
-  <div class="head">
-    <!-- 头部导航栏+标题栏 -->
-    <div class="banner">
-      <div class="bannerboard">图书馆管理系统</div>
-      <div class="nav">
-        <ul>
-          <li><a href="./homepage.html">个人主页</a></li>
-          <li><a href="#">借阅查询</a></li>
-          <li><a href="#">借阅申请</a></li>
-          <li><a href="#">还书申请</a></li>
-          <li><a href="#">个人设置</a></li>
+	<div class="head">
+		<!-- 头部导航栏+标题栏 -->
+		<div class="banner">
+			<div class="bannerboard">图书馆管理系统</div>
+			<div class="nav">
+				<ul>
+					<li><a href="./homepage.html">个人主页</a></li>
+					<li><a href="#">借阅查询</a></li>
+					<li><a href="#">借阅申请</a></li>
+					<li><a href="#">还书申请</a></li>
+					<li><a href="#">个人设置</a></li>
 
-        </ul>
-      </div>
-    </div>
-  </div>
+				</ul>
+			</div>
+		</div>
+	</div>
 
-  <div class="main">
-    <div class="left"></div>
-    <div class="middle">
-      <form action="#" method="post">
-        <div class="book-title">
-          <span class="title1">书籍查询</span>
-          <div class="input-user">
-            <input class="text" type="text" placeholder="请输入书籍相关信息" />
-            <input class="button" type="submit" value="搜索" />
-          </div>
-        </div>
+	<div class="main">
+		<div class="middle">
+			<div class="display">
+				<form action="#" method="post">
 
-        <div class="inputbook">
-          <span class="title1">在借书籍</span>
-          <div class="inputbook-item">
+					<h2>借阅申请<span>表单填写</span></h2>
 
-            <!-- 列表头部标题 -->
-            <div class="item1">
-              <span>书籍id</span>
-              <span>书籍名</span>
-              <span>书籍是否在库</span>
-              <span>借阅/归还</span>
-            </div>
 
-            <!-- 添加样式 -->
-            <div class="item">
-              <span>id1</span>
-              <span>name</span>
-              <span>在库</span>
-              <span>
-                <button>按钮1</button>
-                <button>按钮2</button>
-              </span>
-            </div>
-            <div class="item">测试预留位1</div>
-            <div class="item">测试预留位2</div>
-            <div class="item">测试预留位3</div>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="right"></div>
-  </div>
+					<div class="item">
+						<span>借阅人</span>
+						<input type="text" name="userid" id="userid" disabled="false">
+					</div>
 
+					<div class="item">
+						<span>图书id</span>
+						<input type="text" name="bookid" id="bookid">
+					</div>
+
+					<div class="item">
+						<span>借阅时间</span>
+						<input type="date" name="date" id="date">
+					</div>
+					<div class="item">
+						<button type="submit">提交</button>
+					</div>
+				</form>
+			</div>
+		</div>
 </body>
 
 </html>

@@ -27,8 +27,12 @@ public class dao {
         ResultSet rs = pst.executeQuery();
         if (rs.next()) {
             resultUser = new user();
+            resultUser.setUserid(rs.getInt("userid"));
+            resultUser.setSuperuer(rs.getBoolean("superuser"));
             resultUser.setUsername(rs.getString("username"));
             resultUser.setPassword(rs.getString("password"));
+            resultUser.setEmail(rs.getString("mail"));
+            resultUser.setSex(rs.getString("sex"));
         }
 
         return resultUser;
@@ -41,7 +45,7 @@ public class dao {
         boolean flag = false;
 
         // sql指令操作
-        String sql = "insert into user(username,password,mail,tel,sex) VALUES(?,?,?,?,?)";
+        String sql = "insert into user(superuser,username,password,mail,tel,sex) VALUES(0,?,?,?,?,?)";
         PreparedStatement pst = conn.prepareStatement(sql);
 
         // 接收前台回传的数据，匹配指令val
@@ -76,32 +80,24 @@ public class dao {
     }
 
     // book数据库操作--接收书籍名，回传书籍借阅情况，没有就回传全部在库数目
-    public List<book> getBook(Connection conn, book book) throws Exception {
+    public List<book> getBook(Connection conn, String bookname) throws Exception {
 
         List<book> listbook = new ArrayList<book>();
-        String sql = "select * from book where bookname= ?";
+        String sql = "select * from book where bookname like ? ";
         String sql1 = "select * from book where depot=01";
         PreparedStatement pst = null;
 
-        if (book.getBookname() == "") {
+        if (bookname == "") {
             pst = conn.prepareStatement(sql1);
         } else {
             pst = conn.prepareStatement(sql);
-            pst.setString(1, book.getBookname());
+            pst.setString(1, "%"+bookname+"%");
         }
 
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
 
             book newbook = new book();
-
-            // text code
-            // System.out.println("回传数据==========");
-            // System.out.println("bookid:"+rs.getInt("bookid"));
-            // System.out.println("bookname:"+rs.getString("bookname"));
-            // System.out.println("borrow-num:"+rs.getInt("borrow-num"));
-            // System.out.println("receive-num:"+rs.getInt("receive-num"));
-            // System.out.println("depot:"+rs.getBoolean("depot"));
 
             newbook.setBookid(rs.getInt("bookid"));
             newbook.setBookname(rs.getString("bookname"));
@@ -110,18 +106,21 @@ public class dao {
             newbook.setDepot(rs.getBoolean("depot"));
             listbook.add(newbook);
 
-            // //text code
-            // System.out.println("添加书本成功");
         }
 
-        // text code
-        // System.out.println("=========");
-        // System.out.println("dao操作获取数据成功");
-        // System.out.println("bookname:"+book.getBookname());
-        // System.out.println(newbook.getBookname());
-        // System.out.println(listbook.get(1).getBookname());
 
         return listbook;
+    }
+
+    // booklog数据库操作，借书操作
+    public boolean borrow_book(Connection conn){
+        /*
+            1，获取conn，bookid，和userid（通过前台回传userid）
+            2，判断bookid是否在库，userid是否错误
+        */ 
+
+
+        return false;
     }
 
     // TODO:booklog数据库操作

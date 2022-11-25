@@ -5,6 +5,10 @@ package com.user;
 // import java.sql.ResultSet;
 
 public class user {
+
+    // 用户类
+    private int userid=0;
+    private boolean superuser=false;
     private String username = null;
     private String password = null;
     private String email = null;
@@ -21,11 +25,36 @@ public class user {
     }
 
     public user(String username, String password, String email, String tel, String sex) {
+        super();
         this.username = username;
         this.password = password;
         this.email = email;
         this.tel = tel;
         this.sex = sex;
+    }
+
+    public user(int userid,boolean superuser,String username, String password, String email, String tel, String sex) {
+        this.userid=userid;
+        this.superuser=superuser;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.tel = tel;
+        this.sex = sex;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public boolean getSuperuser() {
+        return superuser;
+    }
+    public void setSuperuer(boolean superuser) {
+        this.superuser = superuser;
     }
 
     public String getPassword() {
@@ -70,7 +99,7 @@ public class user {
 
     @Override
     public String toString() {
-        return "User[username=" + username + ",password=" + password + ",email=" + email + ",tel=" + tel + ",sex=" + sex
+        return "User[userid="+userid+",superuser"+superuser+",username=" + username + ",password=" + password + ",email=" + email + ",tel=" + tel + ",sex=" + sex
                 + "]";
     }
 

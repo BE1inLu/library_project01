@@ -29,7 +29,8 @@
             <!-- user窗口 -->
             <span class="title1">用户信息</span>
             <div class="user">
-                用户名：<%=session.getAttribute("username")%>
+                <span>用户id:<%=session.getAttribute("userid")%></span>
+                <span>用户名：<%=session.getAttribute("username")%></span>
             </div>
         </div>
     </div>

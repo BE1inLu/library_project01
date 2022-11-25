@@ -24,9 +24,6 @@ public class bookservlet extends HttpServlet {
         req.setCharacterEncoding("utf-8");
         String bookname = req.getParameter("bookname");
 
-        book newbook=new book();
-        newbook.setBookname(bookname);
-
         JDBCUtil db = new JDBCUtil();
         List<book> booklist = null;
 
@@ -34,24 +31,10 @@ public class bookservlet extends HttpServlet {
 
         try {
             Connection conn = db.getConn();
-            booklist = dao.getBook(conn, newbook);
-            
-            // text code
-            // System.out.println(booklist.get(1).getBookname());
-            // System.out.println(booklist.get(2).getBookname());
-            // System.out.println(booklist.get(3).getBookname());
-
+            booklist = dao.getBook(conn, bookname);
             //回传booklist
             req.getSession().setAttribute("booklist", booklist);
-
-            //text code
-            // System.out.println("==servlet======");
-            // System.out.println("回传的书籍名："+bookname);
-            // System.out.println("newbook->name:"+newbook.getBookname());
-            // System.out.println("回传booklist成功");  
-
             conn.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

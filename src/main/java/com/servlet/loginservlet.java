@@ -36,10 +36,10 @@ public class loginservlet extends HttpServlet {
 
             try {
                 Connection conn = db.getConn();
-
-                if (dao.login(conn, user) != null) {
-                    req.getSession().setAttribute("username", user.getUsername());
-                    // req.getSession().setAttribute("usersex", user.getSex());
+                user textuser=dao.login(conn, user);
+                if (textuser != null) {
+                    req.getSession().setAttribute("userid", textuser.getUserid());
+                    req.getSession().setAttribute("username", textuser.getUsername());
                     resp.sendRedirect("../jsp-pages/page-jsp/homepage/homepage.jsp");
                 } else {
                     System.out.println("error user");

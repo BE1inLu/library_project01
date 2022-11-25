@@ -5,6 +5,7 @@
     <span class="title1">在借书籍</span>
     <div class="inputbook-item">
         <div class="item1">
+            <span>序号</span>
             <span>书籍id</span>
             <span>书籍名</span>
             <span>书籍是否在库</span>
@@ -21,7 +22,13 @@
                 int bookid=newbook.getBookid();
                 String bookname=newbook.getBookname();
                 Boolean depot=newbook.getDepot();
-                String str="<div class=\"item\"><span>"+(i+1)+"</span><span>"+bookname+"</span><span>"+depot+"</span><span> Button1 Button2 </span></div>";
+                String deport_str=null;
+                if(depot==true){
+                    deport_str="在库";
+                }else{
+                    deport_str="不在库";
+                }
+                String str="<div class=\"item\"><span>"+(i+1)+"</span><span>"+bookid+"</span><span>"+bookname+"</span><span>"+deport_str+"</span><span> Button1 Button2 </span></div>";
                 out.print(str);
             }
             
