@@ -15,11 +15,11 @@
     <div class="main">
         <div class="left"></div>
         <div class="middle">
-            <%-- 外部include --%>
+            <%-- TODO：外部include用户在借书籍获取 --%>
             <span class="title1">在借书籍</span>
             <div class="book1">窗口1</div>
 
-            <%-- 外部include --%>
+            <%-- TODO：外部include，用户阅读记录获取 --%>
             <span class="title1">阅读记录</span>
             <div class="booklog">窗口2</div>
 

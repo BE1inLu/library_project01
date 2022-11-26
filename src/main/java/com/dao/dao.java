@@ -7,6 +7,7 @@ import java.util.List;
 import com.user.*;
 import com.book.*;
 // import com.sql.JDBCUtil;
+import com.booklog.booklog;
 
 public class dao {
 
@@ -113,11 +114,16 @@ public class dao {
     }
 
     // booklog数据库操作，借书操作
-    public boolean borrow_book(Connection conn){
+    public boolean borrow_book(Connection conn,booklog booklog){
         /*
-            1，获取conn，bookid，和userid（通过前台回传userid）
+            1，获取booklog（通过前台回传userid）
             2，判断bookid是否在库，userid是否错误
-        */ 
+        */
+        
+        // sql指令操作，在booklog数据库中插入语句，在bookid和user对上后插入借阅时间和归还时间，boolean和nullitem置为true
+        
+        String sql1="";
+        
 
 
         return false;

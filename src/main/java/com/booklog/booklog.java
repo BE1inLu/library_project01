@@ -10,11 +10,20 @@ public class booklog {
     int userid=0;
     Date borrowDate=null;
     Date receiveDate=null;
-    boolean redepot=false;
-    boolean nullitem=false;
+    boolean redepot=true;
+    boolean nullitem=true;
 
     public booklog(){
         super();
+    }
+
+    public booklog(int bookid,int userid,Date borrowDate,Date receivDate,boolean redepot){
+        super();
+        this.bookid=bookid;
+        this.userid=userid;
+        this.borrowDate=borrowDate;
+        this.receiveDate=receivDate;
+        this.redepot=redepot;
     }
 
     public booklog(int logid,int bookid,int userid,Date borrowDate,Date receiveDate,boolean redepot,boolean nullitem){
