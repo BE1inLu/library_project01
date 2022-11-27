@@ -175,10 +175,8 @@ public class dao {
         boolean flag1 = false;
         dao dao = new dao();
 
-        // TODO：查询是否有重复，否就返回
-        // 检索book表里有没有这本书，以及判断这本书是否在库
-
         // 1,将book表里面此bookid的书信息更新
+        // 这里的判断条件是这本书是否在库和是否没有被借阅
         if (dao.bool_depot(conn, bookid)) {
 
             // 0,前置准备
