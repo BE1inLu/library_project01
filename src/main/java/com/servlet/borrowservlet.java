@@ -44,12 +44,9 @@ public class borrowservlet extends HttpServlet {
         // booklogDAO操作调用，回传参数，后台数据库操作，返回布尔类
         dao dao = new dao();
         JDBCUtil db = new JDBCUtil();
-        if (bookidstr != null) {
+        if (bookidstr != "") {
             try {
                 Connection conn = db.getConn();
-
-                // text code
-                System.out.println("进入dao操作======");
 
                 if (dao.borrow_book(conn, booklog)) {
                     // 返回信息,跳转到主页

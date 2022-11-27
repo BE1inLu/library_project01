@@ -24,12 +24,12 @@
 
                     <div class="item">
                         <span>借阅者id</span>
-                        <input type="text" name="borrowuserid" id="userid" value="<%=session.getAttribute("userid")%>"/>
+                        <input type="text" name="borrowuserid" id="userid" value="<%=session.getAttribute("userid")%>" readonly/>
                     </div>
                     <%-- 用户姓名，不回传 --%>
                     <div class="item">
                         <span>读者姓名</span>
-                        <input type="text" name="username" id="username" value="<%=session.getAttribute("username")%>"/>
+                        <input type="text" name="username" id="username" value="<%=session.getAttribute("username")%>" readonly/>
                     </div>
 
                     <div class="item">

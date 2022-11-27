@@ -48,4 +48,13 @@
     <url-pattern>/webpage/jsp-pages/page-jsp/borrowpage/borrowservlet</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>receiveservlet</servlet-name>
+    <servlet-class>com.servlet.receiveservlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>receiveservlet</servlet-name>
+    <url-pattern>/webpage/jsp-pages/page-jsp/receivepage/receiveservlet</url-pattern>
+  </servlet-mapping>
 </web-app>

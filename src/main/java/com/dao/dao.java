@@ -237,7 +237,7 @@ public class dao {
     }
 
     // booklog数据库操作--查询操作
-    public List<booklog> check_booklog(Connection conn, booklog booklog) throws Exception {
+    public List<booklog> check_booklog_l(Connection conn, booklog booklog) throws Exception {
 
         /*
          * 会调用到此方法的操作：在booklog插入操作中判断是否有重复的booklog，用户借阅书籍记录（包括已还的书），要还书时查询书是否已经归还还是说没有归还
@@ -256,6 +256,10 @@ public class dao {
         boolean flag = true;
         String sqlstr = "";
 
+        // text code
+        System.out.println(booklog.getBookid());
+        System.out.println(booklog.getUserid());
+
         // 1.获取回传的数据是bookID还是userID,如果只有bookid，那就只有1本书，如果是userID，那就有可能不止1本
         if (booklog.getBookid() != 0 && booklog.getUserid() == 0) {
             // 通过bookid获取书籍,返回此bookid的booklog
@@ -271,6 +275,7 @@ public class dao {
             var1 = booklog.getBookid();
             var2 = booklog.getUserid();
             flag = false;
+        }else{
             return bookloglist;
         }
 
@@ -282,7 +287,6 @@ public class dao {
             pst.setInt(1, var1);
             pst.setInt(2, var2);
         }
-
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             booklog newbooklog = new booklog();
@@ -294,6 +298,29 @@ public class dao {
             bookloglist.add(newbooklog);
         }
         return bookloglist;
+    }
+
+    // booklog数据库操作--查询操作，返回为单个booklog条目
+    public booklog check_booklog_i(Connection conn, booklog booklog) throws Exception {
+        //在booklog里面检索userid的这个bookid
+
+        booklog newbooklog=new booklog();
+        // int bookid=booklog.getBookid();
+        // int userid=booklog.getUserid();
+
+        String sqlstr = "select * from booklog where bookid = ? and userid = ?";
+        PreparedStatement pst = conn.prepareStatement(sqlstr);
+        pst.setInt(1, booklog.getBookid());
+        pst.setInt(2, booklog.getUserid());
+        ResultSet rs = pst.executeQuery();
+        if(rs.next()){
+            newbooklog.setLogid(rs.getInt("logid"));
+            newbooklog.setBookid(rs.getInt("bookid"));
+            newbooklog.setUserid(rs.getInt("userid"));
+            newbooklog.setBorrowDate(new java.util.Date(rs.getDate("borrowday").getTime()));
+            newbooklog.setReceiveDate(new java.util.Date(rs.getDate("receiveday").getTime()));
+        }
+        return newbooklog;
     }
 
     // booklog数据库操作--还书操作，返回布尔类
@@ -324,8 +351,12 @@ public class dao {
         textbooklog.setBookid(bookid);
 
         // 1，在booklog里面检索userid的这个bookid，判断redepot是否为true,有1个不是true则返回null
-        List<booklog> bookloglist = dao.check_booklog(conn, textbooklog);
-        textbooklog1 = bookloglist.get(0);
+        textbooklog1 = dao.check_booklog_i(conn, textbooklog);
+
+        // for(int i=0;i<bookloglist.size();i++){
+        //     if(bookloglist!=null) textbooklog1 = bookloglist.get(i);
+        // }
+
         int booklogid = textbooklog1.getLogid();
         if (dao.bool_user(conn, userid)!=true && textbooklog1.getRedepot() != true
                 && textbooklog1.getNullitem() != true) {
@@ -358,7 +389,6 @@ public class dao {
                 System.out.println("更新book数据成功");
                 flag1 = true;// 记录book数据库操作是否成功
             }
-            // 3,完成更新，关闭指针
             pst.close();
 
         }
