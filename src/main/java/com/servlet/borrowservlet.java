@@ -29,7 +29,7 @@ public class borrowservlet extends HttpServlet {
         String useridstr = req.getParameter("borrowuserid");
         String bookidstr = req.getParameter("bookid");
 
-        // TODO:str转int，用于后续操作
+        // str转int，用于后续操作
         int userid=(int)Integer.parseInt(useridstr);
         int bookid=(int)Integer.parseInt(bookidstr);
         long borrowday = (long)Integer.parseInt(req.getParameter("borrowday"));
