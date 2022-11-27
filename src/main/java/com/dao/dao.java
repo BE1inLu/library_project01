@@ -133,7 +133,7 @@ public class dao {
     }
 
     // book数据库操作--判断书本id是否在库&正确，接收bookid，判断depot是否在库，回传depot判断
-    public boolean booldepot(Connection conn, int bookid) throws Exception {
+    public boolean bool_depot(Connection conn, int bookid) throws Exception {
         boolean bool = false;
         String sql = "SELECT * FROM book WHERE bookid= ?";
         PreparedStatement pst = conn.prepareStatement(sql);
@@ -146,8 +146,8 @@ public class dao {
         return bool;
     }
 
-    // 判断此用户id是否正确，接收userid
-    public boolean booluser(Connection conn, int userid) throws Exception {
+    // user数据库操作--判断此用户id是否正确，接收userid
+    public boolean bool_user(Connection conn, int userid) throws Exception {
         boolean bool = false;
         String sql = "SELECT * FROM user WHERE userid= ? ";
         PreparedStatement pst = conn.prepareStatement(sql);
@@ -176,9 +176,10 @@ public class dao {
         dao dao = new dao();
 
         // TODO：查询是否有重复，否就返回
+        // 检索book表里有没有这本书，以及判断这本书是否在库
 
         // 1,将book表里面此bookid的书信息更新
-        if (dao.booldepot(conn, bookid)) {
+        if (dao.bool_depot(conn, bookid)) {
 
             // 0,前置准备
             int borrow_number = 0;
@@ -194,9 +195,6 @@ public class dao {
             rs.close();
             pst.close();
 
-            // textcode
-            // System.out.println("borrownum:"+ borrow_number);
-
             // 2,通过前面回传回来的值更新覆盖原来的的值
             String sql1 = "UPDATE book SET `borrow-num` = ? , depot = ? WHERE bookid= ? ";
             PreparedStatement pst1 = conn.prepareStatement(sql1);
@@ -211,29 +209,14 @@ public class dao {
             // 3,完成更新，关闭指针
             pst1.close();
 
-            // textcode
-            // System.out.println("book操作成功");
         }
-
-        // textcode
-        // System.out.println("获取booklogdate是否正确传值");
-        // System.out.println(booklog.getBorrowDate().getTime());
-        // System.out.println(booklog.getReceiveDate().getTime());
 
         // 时间转换，util.date->sql.date
         java.sql.Date sql_borrowdate = new java.sql.Date(booklog.getBorrowDate().getTime());
         java.sql.Date sql_receivedate = new java.sql.Date(booklog.getReceiveDate().getTime());
 
-        // textcode
-        // sql_borrowdate=(java.sql.Date)booklog.getBorrowDate();
-        // sql_receivedate=(java.sql.Date)booklog.getReceiveDate();
-        // System.out.println(sql_borrowdate);
-        // System.out.println(sql_receivedate);
-        // System.out.println("book数据库操作,判断是否成功"+flag1);
-        // System.out.println("booluser判断"+dao.booluser(conn, userid));
-
         // 2，在booklog里面插入语句
-        if (flag1 && dao.booluser(conn, userid)) {
+        if (flag1 && dao.bool_user(conn, userid)) {
             String sql = "INSERT INTO booklog(bookid,userid,borrowday,receiveday,redepot,nullitem) VALUE(?,?,?,?,1,1)";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, bookid);
@@ -254,7 +237,7 @@ public class dao {
     }
 
     // booklog数据库操作--查询操作
-    public List<booklog> checkbooklog(Connection conn, booklog booklog) throws Exception {
+    public List<booklog> check_booklog(Connection conn, booklog booklog) throws Exception {
 
         /*
          * 会调用到此方法的操作：在booklog插入操作中判断是否有重复的booklog，用户借阅书籍记录（包括已还的书），要还书时查询书是否已经归还还是说没有归还
@@ -268,26 +251,38 @@ public class dao {
 
         // 0.前置操作
         List<booklog> bookloglist = new ArrayList<booklog>();
-        int var = 0;
-        String sql;
+        int var1 = 0;
+        int var2 = 0;
+        boolean flag = true;
+        String sqlstr = "";
 
         // 1.获取回传的数据是bookID还是userID,如果只有bookid，那就只有1本书，如果是userID，那就有可能不止1本
         if (booklog.getBookid() != 0 && booklog.getUserid() == 0) {
             // 通过bookid获取书籍,返回此bookid的booklog
-            sql = "select * into booklog where bookid= ? ";
-            var = booklog.getBookid();
+            sqlstr = "select * into booklog where bookid= ? ";
+            var1 = booklog.getBookid();
         } else if (booklog.getBookid() == 0 && booklog.getUserid() != 0) {
             // 通过userid获取书籍，返回此userid的booklog
-            sql = "select * into booklog where userid= ? ";
-            var = booklog.getUserid();
-        } else {
-            // 值错误直接返回空list表
+            sqlstr = "select * into booklog where userid= ? ";
+            var1 = booklog.getUserid();
+        } else if (booklog.getBookid() != 0 && booklog.getUserid() != 0) {
+            // 两个值都能获取，就返回对应具体的booklog行
+            sqlstr = "select * into booklog where bookid = ? and userid = ?";
+            var1 = booklog.getBookid();
+            var2 = booklog.getUserid();
+            flag = false;
             return bookloglist;
         }
 
         // 2,执行数据库操作
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setInt(1, var);
+        PreparedStatement pst = conn.prepareStatement(sqlstr);
+        if (flag) {
+            pst.setInt(1, var1);
+        } else {
+            pst.setInt(1, var1);
+            pst.setInt(2, var2);
+        }
+
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {
             booklog newbooklog = new booklog();
@@ -298,11 +293,90 @@ public class dao {
             newbooklog.setReceiveDate(new java.util.Date(rs.getDate("receiveday").getTime()));
             bookloglist.add(newbooklog);
         }
-
         return bookloglist;
-
     }
 
-    // TODO:booklog数据库操作--还书操作，返回布尔类
+    // booklog数据库操作--还书操作，返回布尔类
+    public boolean Receive_book(Connection conn, booklog booklog) throws Exception {
+        /*
+         * 会调用此方法的操作：还书servlet会调用此方法
+         * 用途：在booklog里面检索userid的这个bookid，判断是否为不在库，然后把book表里面这本书的receivenum+1和depot置true
+         * 执行上述操作后再将这个booklog表的redepot，nullitem置0
+         * 接收状况：
+         * 接收booklog内的bookid和userid
+         * 回传状况：
+         * 布尔类
+         * 
+         */
 
+        // 0,前置操作
+        boolean flag = false;
+        boolean flag1 = false;
+
+        int bookid = booklog.getBookid();
+        int userid = booklog.getUserid();
+        dao dao = new dao();
+        String sql;
+
+        booklog textbooklog = new booklog();
+        booklog textbooklog1 = null;
+        textbooklog.setUserid(userid);
+        textbooklog.setBookid(bookid);
+
+        // 1，在booklog里面检索userid的这个bookid，判断redepot是否为true,有1个不是true则返回null
+        List<booklog> bookloglist = dao.check_booklog(conn, textbooklog);
+        textbooklog1 = bookloglist.get(0);
+        int booklogid = textbooklog1.getLogid();
+        if (dao.bool_user(conn, userid)!=true && textbooklog1.getRedepot() != true
+                && textbooklog1.getNullitem() != true) {
+            return flag;
+        }
+
+        // 2，book数据库操作，update这本书的receivenum和depot
+        if (dao.bool_depot(conn, bookid) != false) {
+
+            int receive_number = 0;
+            sql = "SELECT * FROM book WHERE bookid = ? ";
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, bookid);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                receive_number = rs.getInt("receive-num");
+            }
+            rs.close();
+            pst.close();
+
+            sql = "UPDATE book SET `receive-num` = ? , depot = ? WHERE bookid= ? ";
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, receive_number + 1);
+            pst.setInt(2, 0);
+            pst.setInt(3, bookid);
+            int res = pst.executeUpdate();
+            if (res != 0) {
+                System.out.println("更新book数据成功");
+                flag1 = true;// 记录book数据库操作是否成功
+            }
+            // 3,完成更新，关闭指针
+            pst.close();
+
+        }
+
+        // 3，将booklog里面这个条目的redepot和nullitem置0
+        if (flag1) {
+            sql = "UPDATE booklog SET redepot = ? , nullitem = ? WHERE logid= ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setBoolean(1, false);
+            pst.setBoolean(2, false);
+            pst.setInt(3, booklogid);
+            int res = pst.executeUpdate();
+            if (res != 0) {
+                System.out.println("更新booklog数据成功,此booklogid为:" + booklogid);
+                flag=true;
+            }
+        }
+
+        return flag;
+    }
 }
