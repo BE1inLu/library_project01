@@ -10,6 +10,6 @@
             "name": "Debug Webpage",
             "url": "http://localhost:8080/library_project01",
             "webRoot": "${workspaceFolder}"
-        }
+        },
     ]
 }

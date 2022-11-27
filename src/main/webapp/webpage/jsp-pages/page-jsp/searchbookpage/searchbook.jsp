@@ -35,8 +35,7 @@
         <%-- <div class="right"></div> --%>
     </div>
     
-    <%-- 底栏 --%>
-    <%@ include file="../../mod-jsp/foot.jsp" %>
+
 
 </body>
 

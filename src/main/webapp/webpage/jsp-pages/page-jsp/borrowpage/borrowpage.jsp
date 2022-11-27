@@ -18,18 +18,18 @@
         <%-- 前台需要知道用户的id（但不显示到html），书籍id，和借阅时间 --%>
         <div class="middle">
             <div class="display">
-                <form action="#" method="post">
+                <form action="borrowservlet" method="post">
 
                     <h2>借阅申请<span>表单填写</span></h2>
 
                     <div class="item">
                         <span>借阅者id</span>
-                        <input type="text" name="userid" id="userid" value="<%=session.getAttribute("userid")%>" disabled="true"/>
+                        <input type="text" name="borrowuserid" id="userid" value="<%=session.getAttribute("userid")%>"/>
                     </div>
                     <%-- 用户姓名，不回传 --%>
                     <div class="item">
                         <span>读者姓名</span>
-                        <input type="text" name="username" id="username" value="<%=session.getAttribute("username")%>" disabled="true"/>
+                        <input type="text" name="username" id="username" value="<%=session.getAttribute("username")%>"/>
                     </div>
 
                     <div class="item">

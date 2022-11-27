@@ -38,4 +38,14 @@
     <url-pattern>/webpage/jsp-pages/page-jsp/searchbookpage/bookservlet</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>borrowservlet</servlet-name>
+    <servlet-class>com.servlet.borrowservlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>borrowservlet</servlet-name>
+    <url-pattern>/webpage/jsp-pages/page-jsp/borrowpage/borrowservlet</url-pattern>
+  </servlet-mapping>
+
 </web-app>

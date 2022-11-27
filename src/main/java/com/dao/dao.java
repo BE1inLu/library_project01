@@ -1,5 +1,6 @@
 package com.dao;
 
+import java.security.Timestamp;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,9 +8,7 @@ import java.util.List;
 
 import com.user.*;
 import com.book.*;
-// import com.sql.JDBCUtil;
 import com.booklog.booklog;
-import com.mysql.cj.xdevapi.Result;
 
 public class dao {
 
@@ -120,7 +119,7 @@ public class dao {
     // book数据库操作--获取bookid,回传此book的信息，返回book类
     public book getBookmessage(Connection conn, int bookid) throws Exception {
         book newbook = new book();
-        String sql = "SELECT * FROM book WHERE bookid=?";
+        String sql = "SELECT * FROM book WHERE bookid = ? ";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setInt(1, bookid);
         ResultSet rs = pst.executeQuery();
@@ -134,7 +133,7 @@ public class dao {
         return newbook;
     }
 
-    // book数据库操作--判断书本id是否在库&正确，判断depot是否在库，回传depot判断
+    // book数据库操作--判断书本id是否在库&正确，接收bookid，判断depot是否在库，回传depot判断
     public boolean booldepot(Connection conn, int bookid) throws Exception {
         boolean bool = false;
         String sql = "SELECT * FROM book WHERE bookid= ?";
@@ -151,8 +150,9 @@ public class dao {
     // 判断此用户id是否正确，接收userid
     public boolean booluser(Connection conn, int userid) throws Exception {
         boolean bool = false;
-        String sql = "SELECT * FROM user WHERE userid=?";
+        String sql = "SELECT * FROM user WHERE userid= ? ";
         PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setInt(1, userid);
         ResultSet rs = pst.executeQuery();
         bool = rs.next();
         rs.close();
@@ -162,11 +162,6 @@ public class dao {
 
     // booklog数据库操作--借书操作,返回布尔类
     public boolean borrow_book(Connection conn, booklog booklog) throws Exception {
-        /*
-         * 1，获取booklog（通过前台回传userid）
-         * 2，判断bookid是否在库，userid是否错误
-         */
-
         /*
          * 判断userid和bookid是否正确，以及书是否在库
          * 如何判断：执行查询userid和bookid指令，有回传则记录，没有会报错
@@ -178,46 +173,84 @@ public class dao {
         int bookid = booklog.getBookid();
         int userid = booklog.getUserid();
         boolean flag = false;
+        boolean flag1=false;
         dao dao = new dao();
+
+        // TODO：查询是否有重复，否就返回
 
         // 1,将book表里面此bookid的书信息更新
         if (dao.booldepot(conn, bookid)) {
+
             // 0,前置准备
             int borrow_number = 0;
+
             // 1,先通过bookid获取borrownum和receivenum
-            String sql0 = "SELECT * INTO book WHERE bookid=?";
-            String sql1 = "UPDATE book SET borrow-num=? depot=? WHERE bookid=?";
+            String sql0 = "SELECT * FROM book WHERE bookid = ? ";
             PreparedStatement pst = conn.prepareStatement(sql0);
-            pst.setInt(1, userid);
+            pst.setInt(1, bookid);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 borrow_number = rs.getInt("borrow-num");
             }
-
-            // 2,通过前面回传回来的值更新覆盖原来的的值
-            borrow_number++;
-            pst = conn.prepareStatement(sql1);
-            pst.setInt(1, borrow_number);
-            pst.setBoolean(2, false);
-            pst.setInt(3, userid);
-            rs = pst.executeQuery();
-
-            // 3,完成更新，关闭指针
             rs.close();
             pst.close();
+            
+            //textcode
+            // System.out.println("borrownum:"+ borrow_number);
+
+            // 2,通过前面回传回来的值更新覆盖原来的的值
+            String sql1 = "UPDATE book SET `borrow-num` = ? , depot = ? WHERE bookid= ? ";
+            PreparedStatement pst1 = conn.prepareStatement(sql1);
+            pst1.setInt(1, borrow_number+1);
+            pst1.setInt(2, 0);
+            pst1.setInt(3, bookid);
+            int res = pst1.executeUpdate();
+            if(res!=0){
+                System.out.println("更新book数据成功");
+                flag1=true;//记录book数据库操作是否成功
+            }
+            // 3,完成更新，关闭指针
+            pst1.close();
+
+            // textcode
+            // System.out.println("book操作成功");
         }
 
+        // textcode
+        // System.out.println("获取booklogdate是否正确传值");
+        // System.out.println(booklog.getBorrowDate().getTime());
+        // System.out.println(booklog.getReceiveDate().getTime());
+
+        // 时间转换，util.date->sql.date
+        java.sql.Date sql_borrowdate=new java.sql.Date(booklog.getBorrowDate().getTime());
+        java.sql.Date sql_receivedate=new java.sql.Date(booklog.getReceiveDate().getTime());
+
+        // textcode
+        // sql_borrowdate=(java.sql.Date)booklog.getBorrowDate();
+        // sql_receivedate=(java.sql.Date)booklog.getReceiveDate();
+        // System.out.println(sql_borrowdate);
+        // System.out.println(sql_receivedate);
+        // System.out.println("book数据库操作,判断是否成功"+flag1);
+        // System.out.println("booluser判断"+dao.booluser(conn, userid));
+    
+
         // 2，在booklog里面插入语句
-        if (dao.booldepot(conn, bookid) && dao.booluser(conn, userid)) {
+        if (flag1 && dao.booluser(conn, userid)) {
             String sql = "INSERT INTO booklog(bookid,userid,borrowday,receiveday,redepot,nullitem) VALUE(?,?,?,?,1,1)";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, bookid);
             pst.setInt(2, userid);
-            pst.setDate(3, new java.sql.Date(booklog.getBorrowDate().getTime()));
-            pst.setDate(4, new java.sql.Date(booklog.getReceiveDate().getTime()));
+            pst.setDate(3, sql_borrowdate);
+            pst.setDate(4, sql_receivedate);
+
             int res = pst.executeUpdate();
-            if (res > 0) flag = true;
+            if (res > 0) 
+                flag = true;
             pst.close();
+
+            // textcode
+            // System.out.println("插入语句成功");
+
         }
         return flag;
     }
