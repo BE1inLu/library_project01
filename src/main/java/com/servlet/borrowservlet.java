@@ -1,7 +1,6 @@
 package com.servlet;
 
 import java.io.IOException;
-// import java.util.*;
 import java.util.Date;
 import java.sql.*;
 import javax.servlet.ServletException;
@@ -57,6 +56,7 @@ public class borrowservlet extends HttpServlet {
                     conn.close();
                     resp.getWriter().write("<script language=javascript>alert('借阅书籍成功');</script>");
                     resp.sendRedirect("./borrowpage.jsp");
+                    
                 }
                 conn.close();
             } catch (Exception e) {

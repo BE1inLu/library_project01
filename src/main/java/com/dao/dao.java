@@ -159,7 +159,7 @@ public class dao {
         return bool;
     }
 
-    // booklog数据库操作--借书操作,返回布尔类
+    // booklog数据库操作--借书操作，在booklog插入一条新语句,返回布尔类
     public boolean borrow_book(Connection conn, booklog booklog) throws Exception {
         /*
          * 判断userid和bookid是否正确，以及书是否在库
@@ -172,7 +172,7 @@ public class dao {
         int bookid = booklog.getBookid();
         int userid = booklog.getUserid();
         boolean flag = false;
-        boolean flag1=false;
+        boolean flag1 = false;
         dao dao = new dao();
 
         // TODO：查询是否有重复，否就返回
@@ -193,20 +193,20 @@ public class dao {
             }
             rs.close();
             pst.close();
-            
-            //textcode
+
+            // textcode
             // System.out.println("borrownum:"+ borrow_number);
 
             // 2,通过前面回传回来的值更新覆盖原来的的值
             String sql1 = "UPDATE book SET `borrow-num` = ? , depot = ? WHERE bookid= ? ";
             PreparedStatement pst1 = conn.prepareStatement(sql1);
-            pst1.setInt(1, borrow_number+1);
+            pst1.setInt(1, borrow_number + 1);
             pst1.setInt(2, 0);
             pst1.setInt(3, bookid);
             int res = pst1.executeUpdate();
-            if(res!=0){
+            if (res != 0) {
                 System.out.println("更新book数据成功");
-                flag1=true;//记录book数据库操作是否成功
+                flag1 = true;// 记录book数据库操作是否成功
             }
             // 3,完成更新，关闭指针
             pst1.close();
@@ -221,8 +221,8 @@ public class dao {
         // System.out.println(booklog.getReceiveDate().getTime());
 
         // 时间转换，util.date->sql.date
-        java.sql.Date sql_borrowdate=new java.sql.Date(booklog.getBorrowDate().getTime());
-        java.sql.Date sql_receivedate=new java.sql.Date(booklog.getReceiveDate().getTime());
+        java.sql.Date sql_borrowdate = new java.sql.Date(booklog.getBorrowDate().getTime());
+        java.sql.Date sql_receivedate = new java.sql.Date(booklog.getReceiveDate().getTime());
 
         // textcode
         // sql_borrowdate=(java.sql.Date)booklog.getBorrowDate();
@@ -231,7 +231,6 @@ public class dao {
         // System.out.println(sql_receivedate);
         // System.out.println("book数据库操作,判断是否成功"+flag1);
         // System.out.println("booluser判断"+dao.booluser(conn, userid));
-    
 
         // 2，在booklog里面插入语句
         if (flag1 && dao.booluser(conn, userid)) {
@@ -243,7 +242,7 @@ public class dao {
             pst.setDate(4, sql_receivedate);
 
             int res = pst.executeUpdate();
-            if (res > 0) 
+            if (res > 0)
                 flag = true;
             pst.close();
 
@@ -254,6 +253,56 @@ public class dao {
         return flag;
     }
 
-    // TODO:booklog数据库操作
+    // booklog数据库操作--查询操作
+    public List<booklog> checkbooklog(Connection conn, booklog booklog) throws Exception {
+
+        /*
+         * 会调用到此方法的操作：在booklog插入操作中判断是否有重复的booklog，用户借阅书籍记录（包括已还的书），要还书时查询书是否已经归还还是说没有归还
+         * 通过book的状态判断
+         * 
+         * 1,接收状况
+         * 1.接收bookid
+         * 2.接收userid
+         * 2，返回接收的参数调用的booklog
+         */
+
+        // 0.前置操作
+        List<booklog> bookloglist = new ArrayList<booklog>();
+        int var = 0;
+        String sql;
+
+        // 1.获取回传的数据是bookID还是userID,如果只有bookid，那就只有1本书，如果是userID，那就有可能不止1本
+        if (booklog.getBookid() != 0 && booklog.getUserid() == 0) {
+            // 通过bookid获取书籍,返回此bookid的booklog
+            sql = "select * into booklog where bookid= ? ";
+            var = booklog.getBookid();
+        } else if (booklog.getBookid() == 0 && booklog.getUserid() != 0) {
+            // 通过userid获取书籍，返回此userid的booklog
+            sql = "select * into booklog where userid= ? ";
+            var = booklog.getUserid();
+        } else {
+            // 值错误直接返回空list表
+            return bookloglist;
+        }
+
+        // 2,执行数据库操作
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setInt(1, var);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            booklog newbooklog = new booklog();
+            newbooklog.setLogid(rs.getInt("logid"));
+            newbooklog.setBookid(rs.getInt("bookid"));
+            newbooklog.setUserid(rs.getInt("userid"));
+            newbooklog.setBorrowDate(new java.util.Date(rs.getDate("borrowday").getTime()));
+            newbooklog.setReceiveDate(new java.util.Date(rs.getDate("receiveday").getTime()));
+            bookloglist.add(newbooklog);
+        }
+
+        return bookloglist;
+
+    }
+
+    // TODO:booklog数据库操作--还书操作，返回布尔类
 
 }
