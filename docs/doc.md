@@ -61,22 +61,15 @@
       - 书籍名字：str
       - 借阅次数：int
       - 归还次数：int
-      - 入库时间：date
       - 是否在库：bit
   - booklog
     - 记录书籍借阅信息，借出则条目+1，归还则销毁条目
     - 列表
       - 条目id：int
       - 书籍id：int
-      - 书籍名：str
-      - 借阅人/借阅id：int
+      - 借阅id：int
       - 借阅时间：date
       - 归还时间：date
       - 是否归还：bit
+      - 有效条目：bit
 
-> - todo
->   - 借阅申请
->     - server页面
->     - dao操作
->     - jsp页面优化
->   - 还书申请
