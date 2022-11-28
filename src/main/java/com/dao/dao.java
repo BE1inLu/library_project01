@@ -63,7 +63,42 @@ public class dao {
         return flag;
     }
 
-    // TODO：user数据库操作，回传user数据库信息
+    // user数据库操作，回传user数据库信息
+    public user getUser_i(Connection conn, user user) throws Exception {
+        boolean flag = false;
+        user newuser = null;
+        String sqlstr = "";
+        int userid = user.getUserid();
+        String username = user.getUsername();
+
+        // 接收判断，userid 还是 username
+        if (user.getUserid() != 0) {
+            sqlstr = "select * from user where userid=?";
+            flag = true;
+
+        } else if (user.getUsername() != null) {
+            sqlstr = "select * from user where username=?";
+            flag = false;
+        }
+
+        PreparedStatement pst = conn.prepareStatement(sqlstr);
+        if (flag) {
+            pst.setInt(1, userid);
+        } else {
+            pst.setString(1, username);
+        }
+
+        ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            newuser = new user();
+            newuser.setUserid(rs.getInt("userid"));
+            newuser.setUsername(rs.getString("username"));
+            newuser.setEmail(rs.getString("email"));
+            newuser.setTel(rs.getString("tel"));
+            newuser.setSex(rs.getString("sex"));
+        }
+        return newuser;
+    }
 
     // book数据库操作--回传全部书籍列表
     public List<book> see_allbook(Connection conn) throws Exception {
@@ -273,7 +308,7 @@ public class dao {
             var1 = booklog.getBookid();
             var2 = booklog.getUserid();
             flag = false;
-        }else{
+        } else {
             return bookloglist;
         }
 
@@ -300,9 +335,9 @@ public class dao {
 
     // booklog数据库操作--查询操作，返回为单个booklog条目
     public booklog check_booklog_i(Connection conn, booklog booklog) throws Exception {
-        //在booklog里面检索userid的这个bookid
+        // 在booklog里面检索userid的这个bookid
 
-        booklog newbooklog=new booklog();
+        booklog newbooklog = new booklog();
         // int bookid=booklog.getBookid();
         // int userid=booklog.getUserid();
 
@@ -311,7 +346,7 @@ public class dao {
         pst.setInt(1, booklog.getBookid());
         pst.setInt(2, booklog.getUserid());
         ResultSet rs = pst.executeQuery();
-        if(rs.next()){
+        if (rs.next()) {
             newbooklog.setLogid(rs.getInt("logid"));
             newbooklog.setBookid(rs.getInt("bookid"));
             newbooklog.setUserid(rs.getInt("userid"));
@@ -352,11 +387,11 @@ public class dao {
         textbooklog1 = dao.check_booklog_i(conn, textbooklog);
 
         // for(int i=0;i<bookloglist.size();i++){
-        //     if(bookloglist!=null) textbooklog1 = bookloglist.get(i);
+        // if(bookloglist!=null) textbooklog1 = bookloglist.get(i);
         // }
 
         int booklogid = textbooklog1.getLogid();
-        if (dao.bool_user(conn, userid)!=true && textbooklog1.getRedepot() != true
+        if (dao.bool_user(conn, userid) != true && textbooklog1.getRedepot() != true
                 && textbooklog1.getNullitem() != true) {
             return flag;
         }
@@ -401,7 +436,7 @@ public class dao {
             int res = pst.executeUpdate();
             if (res != 0) {
                 System.out.println("更新booklog数据成功,此booklogid为:" + booklogid);
-                flag=true;
+                flag = true;
             }
         }
 
