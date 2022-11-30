@@ -1,8 +1,8 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" language="Java"%>
 <%@ page import="java.util.*,com.book.*"%>
 
+<span class="title1"><h3>书籍列表</h3></span>
 <div class="inputbook">
-    <span class="title1">在借书籍</span>
     <div class="inputbook-item">
         <div class="item1">
             <span>序号</span>

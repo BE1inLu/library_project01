@@ -1,6 +1,5 @@
 package com.dao;
 
-// import java.security.Timestamp;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -153,6 +152,9 @@ public class dao {
     // book数据库操作--获取bookid,回传此book的信息，返回book类
     public book getBookmessage(Connection conn, int bookid) throws Exception {
         book newbook = new book();
+
+        // System.out.println("getbookmessage bookid:"+bookid);
+
         String sql = "SELECT * FROM book WHERE bookid = ? ";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setInt(1, bookid);
@@ -262,9 +264,6 @@ public class dao {
                 flag = true;
             pst.close();
 
-            // textcode
-            // System.out.println("插入语句成功");
-
         }
         return flag;
     }
@@ -288,23 +287,24 @@ public class dao {
         int var2 = 0;
         boolean flag = true;
         String sqlstr = "";
+        ResultSet rs=null;
 
         // text code
-        System.out.println(booklog.getBookid());
-        System.out.println(booklog.getUserid());
+        // System.out.println(booklog.getBookid());
+        // System.out.println(booklog.getUserid());
 
         // 1.获取回传的数据是bookID还是userID,如果只有bookid，那就只有1本书，如果是userID，那就有可能不止1本
         if (booklog.getBookid() != 0 && booklog.getUserid() == 0) {
             // 通过bookid获取书籍,返回此bookid的booklog
-            sqlstr = "select * into booklog where bookid= ? ";
+            sqlstr = "select * from booklog where bookid= ? ";
             var1 = booklog.getBookid();
         } else if (booklog.getBookid() == 0 && booklog.getUserid() != 0) {
             // 通过userid获取书籍，返回此userid的booklog
-            sqlstr = "select * into booklog where userid= ? ";
+            sqlstr = "select * from booklog where userid= ? ";
             var1 = booklog.getUserid();
         } else if (booklog.getBookid() != 0 && booklog.getUserid() != 0) {
             // 两个值都能获取，就返回对应具体的booklog行
-            sqlstr = "select * into booklog where bookid = ? and userid = ?";
+            sqlstr = "select * from booklog where bookid = ? and userid = ?";
             var1 = booklog.getBookid();
             var2 = booklog.getUserid();
             flag = false;
@@ -312,15 +312,20 @@ public class dao {
             return bookloglist;
         }
 
+        //text code
+        // System.out.println("sqlstr:"+sqlstr);
+        // System.out.println("flag:"+flag);
+        // System.out.println("var1:"+var1);
+
         // 2,执行数据库操作
         PreparedStatement pst = conn.prepareStatement(sqlstr);
-        if (flag) {
+        if (flag==true) {
             pst.setInt(1, var1);
         } else {
             pst.setInt(1, var1);
             pst.setInt(2, var2);
         }
-        ResultSet rs = pst.executeQuery();
+        rs = pst.executeQuery();
         while (rs.next()) {
             booklog newbooklog = new booklog();
             newbooklog.setLogid(rs.getInt("logid"));
@@ -328,6 +333,8 @@ public class dao {
             newbooklog.setUserid(rs.getInt("userid"));
             newbooklog.setBorrowDate(new java.util.Date(rs.getDate("borrowday").getTime()));
             newbooklog.setReceiveDate(new java.util.Date(rs.getDate("receiveday").getTime()));
+            newbooklog.setRedepot(rs.getBoolean("redepot"));
+            newbooklog.setNullitem(rs.getBoolean("nullitem"));
             bookloglist.add(newbooklog);
         }
         return bookloglist;
@@ -415,7 +422,7 @@ public class dao {
             sql = "UPDATE book SET `receive-num` = ? , depot = ? WHERE bookid= ? ";
             pst = conn.prepareStatement(sql);
             pst.setInt(1, receive_number + 1);
-            pst.setInt(2, 0);
+            pst.setBoolean(2, true);
             pst.setInt(3, bookid);
             int res = pst.executeUpdate();
             if (res != 0) {

@@ -100,42 +100,49 @@ body {
     align-content: space-between;
 }
 
-form{
+form {
     width: 100%;
     height: 100%;
 }
 
-.book-title{
+form .text {
+    margin-left: 10px;
+}
+
+.book-title {
     width: 100%;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     background-color: rgb(255, 154, 0);
+    box-shadow: 0 2px 2px #000;
 }
 
-span .title1{
-    margin-top: 10px;
+span.title1 {
+    margin: 5px;
 }
 
-.input-user{
+.input-user {
+    margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     width: 100%;
 }
 
 
-.inputbook{
+.inputbook {
     width: 100%;
     height: auto;
     display: block;
     background-color: rgb(255, 154, 0);
 }
 
-.inputbook-item{
+.inputbook-item {
     width: 100%;
     height: auto;
     height: auto;
     display: flex;
     flex-wrap: wrap;
-    
+    box-shadow: 0 2px 2px #000;
+
 }
 
 .item1 {
@@ -153,7 +160,7 @@ span .title1{
     justify-content: space-around;
 }
 
-.item{
+.item {
     background-color: #777;
     width: 100%;
     height: 100%;

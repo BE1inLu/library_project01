@@ -19,8 +19,8 @@
         <%-- <div class="left"></div> --%>
         <div class="middle">
             <%-- <%@ include file="book.jsp" %> --%>
+            <span class="title1"><h3>书籍查询</h3></span>
             <div class="book-title">
-                <span class="title1">书籍查询</span>
                 <div class="input-user">
                     <form action="bookservlet" method="post">
                         <input class="text" type="text" name="bookname" placeholder="请输入书籍相关信息" />

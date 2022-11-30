@@ -1,3 +1,5 @@
-function text01(){
-    window.location="../../index.jsp";
+
+// 自动提交
+function func(){
+
 }

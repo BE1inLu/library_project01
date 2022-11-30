@@ -1,13 +1,24 @@
 # 项目文档
 
 - 页面区分
-  - index页
-  - login页
-  - regist页
-  - homepage页
-  - 书籍查询页
-  - 借阅申请页
-  - 还书申请页
+  - 用户页
+    - index页
+    - login页
+    - regist页
+    - homepage页
+    - 书籍查询页
+    - 借阅申请页
+    - 还书申请页
+  - 管理员页
+    - index页
+    - login页
+    - homepage页
+    - 书籍查询页
+    - 借阅申请页
+    - 还书申请页
+    - 用户管理页（用户注销，添加）
+    - 书籍管理页（书籍增补，修改）
+    - booklog记录页（booklog日志修改，查看）
 
 - 登录、注册页面的处理
   - html+servlet
