@@ -31,8 +31,6 @@
             <%-- <%@ include file="input-book.jsp"%> --%>
             <jsp:include page="input-book.jsp" flush="true"/>
         </div>
-        
-        <%-- <div class="right"></div> --%>
     </div>
     
 

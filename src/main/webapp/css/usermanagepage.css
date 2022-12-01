@@ -3,6 +3,12 @@
     padding: 0;
 }
 
+body {
+    box-sizing: border-box;
+    min-width: 900px;
+    min-height: 600px;
+}
+
 .head {
     padding: 20px;
     margin: 0 auto;
@@ -12,8 +18,6 @@
     /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #0083fe, #00fff0);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-    /* position: absolute; */
     top: auto;
 }
 
@@ -21,8 +25,6 @@
     margin: 0 auto;
     width: 100%;
     height: 80px;
-    /* min-width: 10vh;
-    max-width: max-content; */
 }
 
 .bannerboard {
@@ -48,7 +50,6 @@
     float: left;
     width: 100px;
     line-height: 46px;
-    /* border-left: 1px solid #fff; */
     position: relative;
     top: 0;
     overflow: hidden;
@@ -58,7 +59,6 @@
 .nav ul li a {
     display: block;
     height: 46px;
-    /*这里注意要和li里面的高一致*/
     text-decoration: none;
     color: #000;
     text-align: center;
@@ -77,21 +77,12 @@
     box-shadow: 10px 10px 15px #aaa;
 }
 
-body {
-    box-sizing: border-box;
-    min-width: 900px;
-    min-height: 600px;
-}
 
 .main {
     height: 1000px;
     display: flex;
     background-color: #fff;
     justify-content: center;
-}
-
-.main .left {
-    width: 15%;
 }
 
 .main .middle {
@@ -102,57 +93,127 @@ body {
     align-content: space-between;
 }
 
-form {
-    width: 100%;
-    height: 100%;
+span.title1,span.title2{
+    margin:10px;
 }
 
-form .text {
-    margin-left: 10px;
-}
-
-.book-title {
+.input-usermanage{
     width: 100%;
-    /* margin-top: 10px; */
     background-color: rgb(255, 154, 0);
     box-shadow: 0 2px 2px #000;
 }
 
-span.title1 {
-    margin: 5px;
-}
-
-.input-user {
-    margin-left: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+form{
     width: 100%;
+    height: 100%;
+}
+
+.user-search{
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.user-search span{
+    display: flex;
+    flex-direction: row;
+}
+
+.user-search .text{
+    margin-left: 10px;
 }
 
 
-.inputbook {
+.user-exchange{
+    display: block;
+}
+
+.user-exchange {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.user-exchange span{
+    display: flex;
+    flex-direction: row;
+}
+
+.user-exchange-div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:left;
+    margin-left: 5px;
+}
+
+.user-exchange-div span{
+    display: flex;
+    flex-direction: row;
+    width: 200px;
+    justify-content: space-between;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.user-exchange-div span .sex{
+    padding-bottom: 5px;
+}
+
+.user-exchange-div span .inputtext{
+    width: 100px;
+    box-sizing: border-box;
+}
+
+.buttom{
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 30px;
+}
+
+.buttom input{
+    background-color: #3498db;
+    border:1px solid #3498db;
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    font-size: 16px;
+    padding: 5px;
+    width: 15%;
+}
+
+.buttom input:hover{
+    transition-duration: 0.5s;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    color: #000;
+}
+
+.border{
+    height: 10px;
+}
+
+
+.inputuser{
     width: 100%;
     height: auto;
     display: block;
-    background-color: rgb(255, 154, 0);
+    background-color: rgb(255,154,0);
 }
 
-.inputbook-item {
+.inputuser_item{
     width: 100%;
     height: auto;
     display: flex;
     flex-wrap: wrap;
-    box-shadow: 0 2px 2px #000;
-
 }
 
-.item1 {
+.item1{
     background-color: #777;
     width: 100%;
     height: 100%;
-    padding-top: 5px;
+    /* padding-top: 5px;
     padding-left: 5px;
-    padding-right: 5px;
+    padding-right: 5px; */
     margin-top: 10px;
     margin-left: 10px;
     margin-right: 10px;
@@ -172,15 +233,12 @@ span.title1 {
     justify-content: space-around;
 }
 
-/* item2: table的行 */
-
-
-.main .right {
-    width: 15%;
+.item1 span,.item span{
+    width: 100px;
 }
 
 .foot {
-
+    height: 10%;
     margin: 0 auto;
     background-color: #777;
     bottom: 0;

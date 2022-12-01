@@ -4,6 +4,9 @@
     String path=request.getContextPath();
     String basePath=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+ path +"/";
     boolean superuser=(boolean)session.getAttribute("superuser");
+
+    String str1=basePath+"webpage/jsp-pages/page-jsp/usermanage/usermanagepage.jsp";
+
  %>
 <div class="head">
     <!-- 头部导航栏+标题栏 -->
@@ -16,13 +19,12 @@
                 <li><a href="<%=basePath%>webpage/jsp-pages/page-jsp/borrowpage/borrowpage.jsp">借阅申请</a></li>
                 <li><a href="<%=basePath%>webpage/jsp-pages/page-jsp/receivepage/receivepage.jsp">还书申请</a></li>
                 <%if(superuser==true){
-                    out.write("<li><a href=\"#\">用户管理</a></li>");
+                    out.write("<li><a href=\""+str1+"\">用户管理</a></li>");
                     out.write("<li><a href=\"#\">书籍管理</a></li>");
                     out.write("<li><a href=\"#\">日志修改</a></li>");
                 }%>
-                <%-- <li><a href="#">用户管理</a></li>
-                <li><a href="#">用户管理</a></li>
-                <li><a href="#">用户管理</a></li> --%>
+                <li><a href="#">个人资料</a></li>
+
             </ul>
         </div>
     </div>

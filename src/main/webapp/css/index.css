@@ -77,6 +77,8 @@
 
 body {
     box-sizing: border-box;
+    min-width: 900px;
+    min-height: 600px;
 }
 
 .main {
