@@ -24,7 +24,7 @@
             <span class="title1"><h3>书籍管理</h3></span>
             <div class="book_manage">
                 <div class="input_bookmanage">
-                    <form action="#" method="post" id="change_bookinput">
+                    <form action="bookmanageservlet" method="post" id="change_bookinput">
                         <div class="booksearch">
                             <span><input type="radio" name="change" id="search" value="1" checked="checked" ><h4>查询书籍</h4></span>
                             <input class="text" type="text" name="search-text" id="search-text" placeholder="请输入书籍相关信息"/>

@@ -105,10 +105,10 @@ public class dao {
         String username = user.getUsername();
 
         // textcode
-        System.out.println("dao======");
-        System.out.println("userid:" + userid);
-        System.out.println("username:" + username);
-        System.out.println("bool" + (user.getUsername() != null));
+        // System.out.println("dao======");
+        // System.out.println("userid:" + userid);
+        // System.out.println("username:" + username);
+        // System.out.println("bool" + (user.getUsername() != null));
 
         // 接收判断，userid 还是 username,如果都为空则返回列表全部
         if (user.getUserid() != 0) {
@@ -143,7 +143,7 @@ public class dao {
         }
 
         // textcode
-        System.out.println("userlist.size:" + userlist.size());
+        // System.out.println("userlist.size:" + userlist.size());
 
         return userlist;
 
@@ -185,6 +185,49 @@ public class dao {
             newuser.setSex(rs.getString("sex"));
         }
         return newuser;
+    }
+
+    // book数据库操作--接收book，回传book数据库信息
+    public List<book> getBook_l(Connection conn, book book) throws Exception {
+        boolean flag = false;
+        boolean flag1 = false;
+        book newbook = null;
+        String sqlstr = "";
+        List<book> booklist = new ArrayList<book>();
+        int bookid = book.getBookid();
+        String bookname = book.getBookname();
+
+        if (book.getBookid() != 0) {
+            sqlstr = "select * from book where bookid=?";
+            flag = true;
+        } else if (book.getBookname() != null) {
+            sqlstr = "select * from book where bookname LIKE ? ";
+            flag = false;
+        } else {
+            sqlstr = "select * from book";
+            flag1 = true;
+        }
+
+        PreparedStatement pst = conn.prepareStatement(sqlstr);
+        if (flag && flag1 == false) {
+            pst.setInt(1, bookid);
+        } else if (flag == false && flag1 == false) {
+            pst.setString(1, "%" + bookname + "%");
+        }
+
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            newbook = new book();
+            newbook.setBookid(rs.getInt("bookid"));
+            newbook.setBookname(rs.getString("bookname"));
+            newbook.setReceive_num(rs.getInt("receive-num"));
+            newbook.setBorrow_num(rs.getInt("borrow-num"));
+            newbook.setDepot(rs.getBoolean("depot"));
+            booklist.add(newbook);
+        }
+
+        return booklist;
+
     }
 
     // book数据库操作--回传全部书籍列表
@@ -238,7 +281,7 @@ public class dao {
     }
 
     // book数据库操作--获取bookid,回传此book的信息，返回book类
-    public book getBookmessage(Connection conn, int bookid) throws Exception {
+    public book getBook_i(Connection conn, int bookid) throws Exception {
         book newbook = new book();
 
         // System.out.println("getbookmessage bookid:"+bookid);
@@ -271,21 +314,47 @@ public class dao {
         return bool;
     }
 
+    // book数据库操作--增加book
+    
+    // book数据库操作--更新book
+    public boolean update_book(Connection conn,book book) throws Exception{
+        boolean flag=false;
+        String sql="UPDATE book SET bookname= ? , `borrow-num` = ? ,`receive-num`= ? , depot = ? WHERE bookid= ? ";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, '\"'+book.getBookname()+'\"');
+        pst.setInt(2, book.getBorrow_num());
+        pst.setInt(3, book.getReceive_num());
+        pst.setBoolean(4, book.getDepot());
+        pst.setInt(5, book.getBookid());
+
+        int res = pst.executeUpdate();
+        if (res != 0) {
+            System.out.println("更新book数据成功");
+            flag = true;// 记录book数据库操作是否成功
+        }
+        // 3,完成更新，关闭指针
+        pst.close();
+
+        return flag;
+    }
+
+
+
     // user数据库操作--判断此用户id是否正确，接收userid
     public boolean bool_user(Connection conn, int userid) throws Exception {
 
         // textcode
-        System.out.println("bool_user.userid:"+userid);
+        System.out.println("bool_user.userid:" + userid);
 
         boolean flag = false;
         String sql = "SELECT * FROM user WHERE userid= ? ";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setInt(1, userid);
         ResultSet rs = pst.executeQuery();
-        flag = (rs.next())?true:false;
+        flag = (rs.next()) ? true : false;
 
         // textcode
-        System.out.println("bool_user.bool:"+flag);
+        System.out.println("bool_user.bool:" + flag);
 
         rs.close();
         pst.close();

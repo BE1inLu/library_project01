@@ -30,7 +30,7 @@ public class usermanageservlet extends HttpServlet {
         int changeid = (int) Integer.parseInt(change);
 
         // textcode
-        System.out.println("change:" + change);
+        // System.out.println("change:" + change);
 
         JDBCUtil db = new JDBCUtil();
         user user = new user();
@@ -50,14 +50,14 @@ public class usermanageservlet extends HttpServlet {
             boolean flag = pattern.matcher(usertext).matches();
 
             // textcode
-            System.out.println("flag:" + flag);
+            // System.out.println("flag:" + flag);
 
             if (flag) {
                 // 判断是否不为空
                 if (usertext != "") {
                     int userid = (int) Integer.parseInt(usertext);
                     // textcode
-                    System.out.println("userid:" + userid);
+                    // System.out.println("userid:" + userid);
 
                     user.setUserid(userid);
                 }
@@ -66,8 +66,8 @@ public class usermanageservlet extends HttpServlet {
             }
 
             // textcode
-            System.out.println("user.userid:" + user.getUserid());
-            System.out.println("user.username:" + user.getUsername());
+            // System.out.println("user.userid:" + user.getUserid());
+            // System.out.println("user.username:" + user.getUsername());
 
             try {
                 Connection conn = db.getConn();
@@ -98,14 +98,14 @@ public class usermanageservlet extends HttpServlet {
                 superuser = true;
 
             // textcode
-            // 检测有无获取值
-            System.out.println("进入修改框");
-            System.out.println("userid:" + userid);
-            System.out.println("userpassword:" + userpassword);
-            System.out.println("useremail:" + usermail);
-            System.out.println("usertel:" + usertel);
-            System.out.println("sex:" + usersex);
-            System.out.println("superuser:" + superuser);
+            // // 检测有无获取值
+            // System.out.println("进入修改框");
+            // System.out.println("userid:" + userid);
+            // System.out.println("userpassword:" + userpassword);
+            // System.out.println("useremail:" + usermail);
+            // System.out.println("usertel:" + usertel);
+            // System.out.println("sex:" + usersex);
+            // System.out.println("superuser:" + superuser);
 
             user newuser = new user();
 
@@ -121,7 +121,7 @@ public class usermanageservlet extends HttpServlet {
             }
 
             // 判断输入的字符为空则不覆盖newbook
-            System.out.println("查询与覆盖=====");
+            // System.out.println("查询与覆盖=====");
 
             if(username!="") newuser.setUsername(username);
             if(userpassword!="") newuser.setPassword(userpassword);
