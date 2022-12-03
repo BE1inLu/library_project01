@@ -28,7 +28,7 @@ public class dao {
         if (rs.next()) {
             resultUser = new user();
             resultUser.setUserid(rs.getInt("userid"));
-            resultUser.setSuperuer(rs.getBoolean("superuser"));
+            resultUser.setSuperuser(rs.getBoolean("superuser"));
             resultUser.setUsername(rs.getString("username"));
             resultUser.setPassword(rs.getString("password"));
             resultUser.setEmail(rs.getString("mail"));
@@ -62,6 +62,93 @@ public class dao {
         return flag;
     }
 
+    // user数据库操作--更新user数据库内容
+    public boolean update_user(Connection conn, user user) throws Exception {
+
+        // 前置
+        boolean flag = false;
+        dao dao = new dao();
+
+        // 1，检索userid是否存在
+        if (!dao.bool_user(conn, user.getUserid())) {
+            System.out.println("检测userid不存在");
+            return flag;
+        }
+
+        // 2，update user
+        String sql = "UPDATE `user` SET superuser= ? , username= ? ,password= ? ,mail= ? ,tel= ? ,sex= ? WHERE userid= ? ";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setBoolean(1, user.getSuperuser());
+        pst.setString(2, user.getUsername());
+        pst.setString(3, user.getPassword());
+        pst.setString(4, user.getEmail());
+        pst.setString(5, user.getTel());
+        pst.setString(6, user.getSex());
+        pst.setInt(7, user.getUserid());
+
+        int res = pst.executeUpdate();
+        if (res != 0) {
+            System.out.println("修改user数据成功,该userid为:" + user.getUserid());
+            flag = true;
+        }
+        return flag;
+    }
+
+    // user数据库操作，回传user数据库列表信息
+    public List<user> getUser_l(Connection conn, user user) throws Exception {
+        boolean flag = false;
+        boolean flag1 = false;
+        user newuser = null;
+        String sqlstr = "";
+        List<user> userlist = new ArrayList<user>();
+        int userid = user.getUserid();
+        String username = user.getUsername();
+
+        // textcode
+        System.out.println("dao======");
+        System.out.println("userid:" + userid);
+        System.out.println("username:" + username);
+        System.out.println("bool" + (user.getUsername() != null));
+
+        // 接收判断，userid 还是 username,如果都为空则返回列表全部
+        if (user.getUserid() != 0) {
+            sqlstr = "select * from user where userid=?";
+            flag = true;
+        } else if (user.getUsername() != null) {
+            sqlstr = "select * from user where username LIKE ? ";
+            flag = false;
+        } else {
+            sqlstr = "select * from user";
+            flag1 = true;
+        }
+
+        PreparedStatement pst = conn.prepareStatement(sqlstr);
+        if (flag && flag1 == false) {
+            pst.setInt(1, userid);
+        } else if (flag == false && flag1 == false) {
+            pst.setString(1, "%" + username + "%");
+        }
+
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            newuser = new user();
+            newuser.setUserid(rs.getInt("userid"));
+            newuser.setUsername(rs.getString("username"));
+            newuser.setPassword(rs.getString("password"));
+            newuser.setEmail(rs.getString("mail"));
+            newuser.setTel(rs.getString("tel"));
+            newuser.setSex(rs.getString("sex"));
+            newuser.setSuperuser(rs.getBoolean("superuser"));
+            userlist.add(newuser);
+        }
+
+        // textcode
+        System.out.println("userlist.size:" + userlist.size());
+
+        return userlist;
+
+    }
+
     // user数据库操作，回传user数据库信息
     public user getUser_i(Connection conn, user user) throws Exception {
         boolean flag = false;
@@ -92,7 +179,8 @@ public class dao {
             newuser = new user();
             newuser.setUserid(rs.getInt("userid"));
             newuser.setUsername(rs.getString("username"));
-            newuser.setEmail(rs.getString("email"));
+            newuser.setPassword(rs.getString("password"));
+            newuser.setEmail(rs.getString("mail"));
             newuser.setTel(rs.getString("tel"));
             newuser.setSex(rs.getString("sex"));
         }
@@ -185,15 +273,23 @@ public class dao {
 
     // user数据库操作--判断此用户id是否正确，接收userid
     public boolean bool_user(Connection conn, int userid) throws Exception {
-        boolean bool = false;
+
+        // textcode
+        System.out.println("bool_user.userid:"+userid);
+
+        boolean flag = false;
         String sql = "SELECT * FROM user WHERE userid= ? ";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setInt(1, userid);
         ResultSet rs = pst.executeQuery();
-        bool = rs.next();
+        flag = (rs.next())?true:false;
+
+        // textcode
+        System.out.println("bool_user.bool:"+flag);
+
         rs.close();
         pst.close();
-        return bool;
+        return flag;
     }
 
     // booklog数据库操作--借书操作，在booklog插入一条新语句,返回布尔类
@@ -287,7 +383,7 @@ public class dao {
         int var2 = 0;
         boolean flag = true;
         String sqlstr = "";
-        ResultSet rs=null;
+        ResultSet rs = null;
 
         // text code
         // System.out.println(booklog.getBookid());
@@ -312,14 +408,14 @@ public class dao {
             return bookloglist;
         }
 
-        //text code
+        // text code
         // System.out.println("sqlstr:"+sqlstr);
         // System.out.println("flag:"+flag);
         // System.out.println("var1:"+var1);
 
         // 2,执行数据库操作
         PreparedStatement pst = conn.prepareStatement(sqlstr);
-        if (flag==true) {
+        if (flag == true) {
             pst.setInt(1, var1);
         } else {
             pst.setInt(1, var1);

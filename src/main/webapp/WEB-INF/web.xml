@@ -57,4 +57,15 @@
     <servlet-name>receiveservlet</servlet-name>
     <url-pattern>/webpage/jsp-pages/page-jsp/receivepage/receiveservlet</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>usermanageservlet</servlet-name>
+    <servlet-class>com.servlet.usermanageservlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>usermanageservlet</servlet-name>
+    <url-pattern>/webpage/jsp-pages/page-jsp/usermanage/usermanageservlet</url-pattern>
+  </servlet-mapping>
+
 </web-app>

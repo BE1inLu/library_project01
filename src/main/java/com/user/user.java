@@ -53,7 +53,7 @@ public class user {
     public boolean getSuperuser() {
         return superuser;
     }
-    public void setSuperuer(boolean superuser) {
+    public void setSuperuser(boolean superuser) {
         this.superuser = superuser;
     }
 
