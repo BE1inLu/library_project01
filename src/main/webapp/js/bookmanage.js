@@ -3,11 +3,15 @@ const change_bookinput = document.getElementById("change_bookinput");
 
 change_bookinput.onchange = function () {
     const exchange1 = document.getElementsByName("change");
-    const exchange2=document.getElementsByName("bookchange");
+    const exchange2 = document.getElementsByName("bookchange");
+
+    var flag = false;
 
     for (let i = 0; i < exchange1.length; i++) {
         if (exchange1[i].checked) {
             if (i != 0) {
+                flag = false;
+
                 document.getElementById("search-text").disabled = true;
 
                 document.getElementById("bookid").disabled = false;
@@ -22,6 +26,8 @@ change_bookinput.onchange = function () {
                 document.getElementById("exchangebook2").disabled = false;
 
             } else {
+                flag = true;
+
                 document.getElementById("search-text").disabled = false;
 
                 document.getElementById("bookid").disabled = true;
@@ -38,14 +44,15 @@ change_bookinput.onchange = function () {
         }
     }
 
-    for(let i=0;i<exchange2.length;i++){
-        if(exchange2[i].checked){
-            if(i!=0){
-                document.getElementById("bookid").disabled=true;
-            }else{
-                document.getElementById("bookid").disabled=false;
+    if (!flag) {
+        for (let i = 0; i < exchange2.length; i++) {
+            if (exchange2[i].checked) {
+                if (i != 0) {
+                    document.getElementById("bookid").disabled = true;
+                } else {
+                    document.getElementById("bookid").disabled = false;
+                }
             }
         }
     }
-
 }

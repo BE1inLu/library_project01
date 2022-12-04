@@ -28,24 +28,29 @@
                         <div class="logsearch">
                             <span><input type="radio" name="change" id="search" value="1" checked="checked"><h4>日志查询</h4></span>
                             <input class="text" type="text" name="search-text" id="search-text" placeholder="请输入日志相关信息"/>
+                            <span class="inputidchange-span">选择输入类型：
+                                <input type="radio" name="inputidchange" id="inputidchange1" value="1">：日志id
+                                <input type="radio" name="inputidchange" id="inputidchange2" value="2">：用户id
+                                <input type="radio" name="inputidchange" id="inputidchange3" value="3">：书籍id
+                            </span>
                         </div>
                         <div class="border"></div>
 
                         <div class="log_exchange">
                             <span><input type="radio" name="change" id="exchange" value="2"><h4>日志修改</h4></span>
                             <div class="log_exchange_div">
-                                <span>日志id: <input class="inputtext" type="text" name="logid" id="logid" disabled></span>
-                                <span>书籍id: <input class="inputtext" type="text" name="bookid" id="bookid" disabled></span>
-                                <span>用户id: <input class="inputtext" type="text" name="userid" id="userid" disabled></span>
-                                <span>创建日期/借阅日期: <input class="inputtext" type="date" name="borrowDate" id="borrowDate" disabled></span>
-                                <span>结束日期/归还日期: <input class="inputtext" type="date" name="receiveDate" id="receiveDate" disabled></span>
-                                <span>是否不在库:
+                                <span>日志id:<input class="inputtext" type="text" name="logid" id="logid" disabled></span>
+                                <span>书籍id:<input class="inputtext" type="text" name="bookid" id="bookid" disabled></span>
+                                <span>用户id:<input class="inputtext" type="text" name="userid" id="userid" disabled></span>
+                                <span>借阅日期:<input class="inputtext" type="text" name="borrowDate" id="borrowDate" placeholder="yyyy-mm-dd" disabled></span>
+                                <span>归还日期:<input class="inputtext" type="text" name="receiveDate" id="receiveDate" placeholder="yyy-mm-dd" disabled></span>
+                                <span>库存设置:
                                     <div>
                                         不在库:<input type="radio" class="logundepot" name="logundepot" id="undepot1" value="1" disabled>
                                         在库:<input type="radio" class="logundepot" name="logundepot" id="undepot2" value="0" disabled>
                                     </div>
                                 </span>
-                                <span>条目是否有效：
+                                <span>条目设置:
                                     <div>
                                         有效：<input type="radio" class="lognullitem" name="lognullitem" id="nullitem1" value="1" disabled>
                                         无效：<input type="radio" class="lognullitem" name="lognullitem" id="nullitem2" value="0" disabled>
@@ -60,7 +65,7 @@
                             </div>
                         </div>
                         <div class="border"></div>
-                        <div class="buttom"><input type="submit" value="提交"></div>
+                        <div class="buttom"><input type="submit" onclick="" value="提交"></div>
                         <div class="border"></div>
                     </form>
                 </div>

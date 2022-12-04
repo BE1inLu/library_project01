@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.Flags.Flag;
+
 import com.user.*;
 import com.book.*;
 import com.booklog.booklog;
@@ -300,7 +302,7 @@ public class dao {
         return newbook;
     }
 
-    public book getBookmessage(Connection conn,int bookid) throws Exception{
+    public book getBookmessage(Connection conn, int bookid) throws Exception {
         return getBook_i(conn, bookid);
     }
 
@@ -319,27 +321,27 @@ public class dao {
     }
 
     // book数据库操作--增加book
-    public boolean insert_book(Connection conn,book book)throws Exception{
-        boolean flag=false;
-        String sql="INSERT INTO book(bookname,`borrow-num`,`receive-num`,depot) VALUE(?,?,?,?)";
+    public boolean insert_book(Connection conn, book book) throws Exception {
+        boolean flag = false;
+        String sql = "INSERT INTO book(bookname,`borrow-num`,`receive-num`,depot) VALUE(?,?,?,?)";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setString(1, book.getBookname());
         pst.setInt(2, book.getBorrow_num());
         pst.setInt(3, book.getReceive_num());
         pst.setBoolean(4, book.getDepot());
         int res = pst.executeUpdate();
-        flag=(res>0)?true:false;
+        flag = (res > 0) ? true : false;
         pst.close();
 
         return flag;
     }
-    
+
     // book数据库操作--更新book
-    public boolean update_book(Connection conn,book book) throws Exception{
-        boolean flag=false;
-        String sql="UPDATE book SET bookname= ? , `borrow-num` = ? ,`receive-num`= ? , depot = ? WHERE bookid= ? ";
+    public boolean update_book(Connection conn, book book) throws Exception {
+        boolean flag = false;
+        String sql = "UPDATE book SET bookname= ? , `borrow-num` = ? ,`receive-num`= ? , depot = ? WHERE bookid= ? ";
         PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, '\"'+book.getBookname()+'\"');
+        pst.setString(1, '\"' + book.getBookname() + '\"');
         pst.setInt(2, book.getBorrow_num());
         pst.setInt(3, book.getReceive_num());
         pst.setBoolean(4, book.getDepot());
@@ -355,8 +357,6 @@ public class dao {
 
         return flag;
     }
-
-
 
     // user数据库操作--判断此用户id是否正确，接收userid
     public boolean bool_user(Connection conn, int userid) throws Exception {
@@ -477,20 +477,24 @@ public class dao {
         // System.out.println(booklog.getUserid());
 
         // 1.获取回传的数据是bookID还是userID,如果只有bookid，那就只有1本书，如果是userID，那就有可能不止1本
-        if (booklog.getBookid() != 0 && booklog.getUserid() == 0) {
-            // 通过bookid获取书籍,返回此bookid的booklog
+        if (booklog.getBookid() != 0 && booklog.getUserid() == 0 && booklog.getLogid() == 0) {
+            // 通过bookid获取log,返回此bookid的booklog
             sqlstr = "select * from booklog where bookid= ? ";
             var1 = booklog.getBookid();
-        } else if (booklog.getBookid() == 0 && booklog.getUserid() != 0) {
-            // 通过userid获取书籍，返回此userid的booklog
+        } else if (booklog.getBookid() == 0 && booklog.getUserid() != 0 && booklog.getLogid() == 0) {
+            // 通过userid获取log，返回此userid的booklog
             sqlstr = "select * from booklog where userid= ? ";
             var1 = booklog.getUserid();
-        } else if (booklog.getBookid() != 0 && booklog.getUserid() != 0) {
+        } else if (booklog.getBookid() != 0 && booklog.getUserid() != 0 && booklog.getLogid() == 0) {
             // 两个值都能获取，就返回对应具体的booklog行
             sqlstr = "select * from booklog where bookid = ? and userid = ?";
             var1 = booklog.getBookid();
             var2 = booklog.getUserid();
             flag = false;
+        } else if (booklog.getLogid() != 0 && booklog.getUserid() == 0 && booklog.getBookid() == 0) {
+            // 通过logid返回log，返回此logid的booklog
+            sqlstr = "select * from booklog where logid= ? ";
+            var1 = booklog.getLogid();
         } else {
             return bookloglist;
         }
@@ -629,6 +633,54 @@ public class dao {
                 flag = true;
             }
         }
+
+        return flag;
+    }
+
+    // booklog数据库操作--更新booklog数据库条目
+    public boolean update_booklog(Connection conn,booklog booklog)throws Exception{
+        boolean flag=false;
+
+        java.sql.Date sql_borrowdate = new java.sql.Date(booklog.getBorrowDate().getTime());
+        java.sql.Date sql_receivedate = new java.sql.Date(booklog.getReceiveDate().getTime());
+
+        String sql="UPDATE booklog SET bookid= ? , userid= ? ,borrowday= ? ,receiveday= ? ,redepot= ? ,nullitem= ? WHERE logid= ?";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setInt(1, booklog.getBookid());
+        pst.setInt(2, booklog.getUserid());
+        pst.setDate(3, sql_borrowdate);
+        pst.setDate(4, sql_receivedate);
+        pst.setBoolean(5, booklog.getRedepot());
+        pst.setBoolean(6, booklog.getNullitem());
+        pst.setInt(7, booklog.getLogid());
+        int res = pst.executeUpdate();
+        if (res != 0) {
+            System.out.println("更新booklog数据成功,此booklogid为:" + booklog.getLogid());
+            flag = true;
+        }
+        return flag;
+    }
+
+    // booklog数据库操作--插入新条目
+    public boolean insert_booklog(Connection conn,booklog booklog)throws Exception{
+        boolean flag=false;
+
+        java.sql.Date sql_borrowdate = new java.sql.Date(booklog.getBorrowDate().getTime());
+        java.sql.Date sql_receivedate = new java.sql.Date(booklog.getReceiveDate().getTime());
+
+        String sql="insert into booklog(bookid,userid,borrowday,receiveday,redepot,nullitem) VALUES(?,?,?,?,?,?)";
+
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setInt(1, booklog.getBookid());
+        pst.setInt(2, booklog.getUserid());
+        pst.setDate(3, sql_borrowdate);
+        pst.setDate(4, sql_receivedate);
+        pst.setBoolean(5, booklog.getRedepot());
+        pst.setBoolean(6, booklog.getNullitem());
+
+        int res = pst.executeUpdate();
+        if (res > 0)
+            flag = true;
 
         return flag;
     }

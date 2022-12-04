@@ -137,7 +137,7 @@ public class bookmanageservlet extends HttpServlet {
                     try {
                         Connection conn = db.getConn();
                         if (dao.insert_book(conn, newbook)) {
-                            System.out.println("已添加书籍");
+                            System.out.println("已成功添加书籍");
                         }
                         conn.close();
                     } catch (Exception e) {

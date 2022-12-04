@@ -29,7 +29,7 @@
                 <div class="input-usermanage">
                     <form action="usermanageservlet" method="post" id="change_userinput">
                         <div class="user-search">
-                            <span><input type="radio" name="change" id="search" value="1" checked="checked" ><h4>查询</h4></span>
+                            <span><input type="radio" name="change" id="search" value="1" checked="checked" ><h4>用户查询</h4></span>
                             <input class="text" type="text" name="search-text" id="search-text" placeholder="请输入用户相关信息" />
                         </div>
                         <div class="border"></div>
