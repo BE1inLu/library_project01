@@ -48,9 +48,12 @@ public class booklogmanageservlet extends HttpServlet {
             boolean flag1 = false;
 
             String inputidchangestr = req.getParameter("inputidchange");
-            int inputidchange = (int) Integer.parseInt(inputidchangestr);
-
-            if (flag) {
+            int inputidchange = 0;
+            if (inputidchangestr != "") {
+                inputidchange = (int) Integer.parseInt(inputidchangestr);
+            }
+            
+            if (flag && booksearchtext != "") {
                 flag1 = true;
                 if (inputidchange == 1) {
                     logid = (int) Integer.parseInt(booksearchtext);
@@ -73,7 +76,14 @@ public class booklogmanageservlet extends HttpServlet {
                     e.printStackTrace();
                 }
             } else {
-                bookloglist = null;
+                try {
+                    Connection conn = db.getConn();
+                    bookloglist = dao.check_booklog_all(conn);
+                    conn.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             req.getSession().setAttribute("bookloglist", bookloglist);
@@ -116,8 +126,8 @@ public class booklogmanageservlet extends HttpServlet {
             if (logchangeid == 1) {
                 // 选项为修改log，需要输入logid
                 String logidstr = req.getParameter("logid");
-                logid=(int)Integer.parseInt(logidstr);
-                
+                logid = (int) Integer.parseInt(logidstr);
+
                 booklog textbooklog = new booklog();
                 try {
                     Connection conn = db.getConn();
@@ -128,22 +138,22 @@ public class booklogmanageservlet extends HttpServlet {
                     e.printStackTrace();
                 }
 
-                if(bookid!=0)
+                if (bookid != 0)
                     textbooklog.setBookid(bookid);
-                if(userid!=0)
+                if (userid != 0)
                     textbooklog.setUserid(userid);
-                if(borrowdatestr!="")
+                if (borrowdatestr != "")
                     textbooklog.setBorrowDate(borrowdate);
-                if(receivedatestr!="")
+                if (receivedatestr != "")
                     textbooklog.setReceiveDate(receivedate);
-                if(logredepot!=textbooklog.getRedepot()) 
+                if (logredepot != textbooklog.getRedepot())
                     textbooklog.setRedepot(logredepot);
-                if(lognullitem!=textbooklog.getNullitem()) 
+                if (lognullitem != textbooklog.getNullitem())
                     textbooklog.setNullitem(lognullitem);
 
                 // 更新booklog数据库内容
                 try {
-                    Connection conn=db.getConn();
+                    Connection conn = db.getConn();
                     dao.update_booklog(conn, booklog);
                     conn.close();
                 } catch (Exception e) {
@@ -152,8 +162,8 @@ public class booklogmanageservlet extends HttpServlet {
                 resp.sendRedirect("booklogmanagepage.jsp");
             } else {
                 // 选项为插入log，不需要输入logid
-                booklog newbooklog=new booklog();
-                if(bookidstr!=""&&useridstr!=""&&borrowdatestr!=""&&receivedatestr!=""){
+                booklog newbooklog = new booklog();
+                if (bookidstr != "" && useridstr != "" && borrowdatestr != "" && receivedatestr != "") {
                     newbooklog.setBookid(bookid);
                     newbooklog.setUserid(userid);
                     newbooklog.setBorrowDate(borrowdate);
@@ -162,15 +172,15 @@ public class booklogmanageservlet extends HttpServlet {
                     newbooklog.setNullitem(lognullitem);
 
                     try {
-                        Connection conn=db.getConn();
-                        if(dao.insert_booklog(conn, booklog)){
+                        Connection conn = db.getConn();
+                        if (dao.insert_booklog(conn, booklog)) {
                             System.out.println("已成功添加日志");
                         }
                         conn.close();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
                     System.out.println("值为空，无法添加");
                 }
 

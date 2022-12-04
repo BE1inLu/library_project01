@@ -24,14 +24,14 @@
             <span class="title1"><h3>日志管理</h3></span>
             <div class="log_manage">
                 <div class="input_logmanage">
-                    <form action="#" method="post" id="change_loginput">
+                    <form action="booklogmanageservlet" method="post" id="change_loginput">
                         <div class="logsearch">
                             <span><input type="radio" name="change" id="search" value="1" checked="checked"><h4>日志查询</h4></span>
                             <input class="text" type="text" name="search-text" id="search-text" placeholder="请输入日志相关信息"/>
                             <span class="inputidchange-span">选择输入类型：
-                                <input type="radio" name="inputidchange" id="inputidchange1" value="1">：日志id
-                                <input type="radio" name="inputidchange" id="inputidchange2" value="2">：用户id
-                                <input type="radio" name="inputidchange" id="inputidchange3" value="3">：书籍id
+                                <input type="radio" name="inputidchange" id="inputidchange1" checked="checked" value="1">:日志id
+                                <input type="radio" name="inputidchange" id="inputidchange2" value="2">:用户id
+                                <input type="radio" name="inputidchange" id="inputidchange3" value="3">:书籍id
                             </span>
                         </div>
                         <div class="border"></div>

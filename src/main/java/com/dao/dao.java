@@ -451,6 +451,27 @@ public class dao {
         return flag;
     }
 
+    // booklog数据库操作--获取booklog所有数据
+    public List<booklog> check_booklog_all(Connection conn) throws Exception {
+        List<booklog> bookloglist = new ArrayList<booklog>();
+        String sql = "select * from booklog";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            booklog newbooklog = new booklog();
+            newbooklog.setLogid(rs.getInt("logid"));
+            newbooklog.setBookid(rs.getInt("bookid"));
+            newbooklog.setUserid(rs.getInt("userid"));
+            newbooklog.setBorrowDate(new java.util.Date(rs.getDate("borrowday").getTime()));
+            newbooklog.setReceiveDate(new java.util.Date(rs.getDate("receiveday").getTime()));
+            newbooklog.setRedepot(rs.getBoolean("redepot"));
+            newbooklog.setNullitem(rs.getBoolean("nullitem"));
+            bookloglist.add(newbooklog);
+        }
+        return bookloglist;
+
+    }
+
     // booklog数据库操作--查询操作
     public List<booklog> check_booklog_l(Connection conn, booklog booklog) throws Exception {
 
@@ -638,13 +659,13 @@ public class dao {
     }
 
     // booklog数据库操作--更新booklog数据库条目
-    public boolean update_booklog(Connection conn,booklog booklog)throws Exception{
-        boolean flag=false;
+    public boolean update_booklog(Connection conn, booklog booklog) throws Exception {
+        boolean flag = false;
 
         java.sql.Date sql_borrowdate = new java.sql.Date(booklog.getBorrowDate().getTime());
         java.sql.Date sql_receivedate = new java.sql.Date(booklog.getReceiveDate().getTime());
 
-        String sql="UPDATE booklog SET bookid= ? , userid= ? ,borrowday= ? ,receiveday= ? ,redepot= ? ,nullitem= ? WHERE logid= ?";
+        String sql = "UPDATE booklog SET bookid= ? , userid= ? ,borrowday= ? ,receiveday= ? ,redepot= ? ,nullitem= ? WHERE logid= ?";
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setInt(1, booklog.getBookid());
         pst.setInt(2, booklog.getUserid());
@@ -662,13 +683,13 @@ public class dao {
     }
 
     // booklog数据库操作--插入新条目
-    public boolean insert_booklog(Connection conn,booklog booklog)throws Exception{
-        boolean flag=false;
+    public boolean insert_booklog(Connection conn, booklog booklog) throws Exception {
+        boolean flag = false;
 
         java.sql.Date sql_borrowdate = new java.sql.Date(booklog.getBorrowDate().getTime());
         java.sql.Date sql_receivedate = new java.sql.Date(booklog.getReceiveDate().getTime());
 
-        String sql="insert into booklog(bookid,userid,borrowday,receiveday,redepot,nullitem) VALUES(?,?,?,?,?,?)";
+        String sql = "insert into booklog(bookid,userid,borrowday,receiveday,redepot,nullitem) VALUES(?,?,?,?,?,?)";
 
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setInt(1, booklog.getBookid());
