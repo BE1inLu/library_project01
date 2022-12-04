@@ -58,7 +58,8 @@ public class bookmanageservlet extends HttpServlet {
                 e.printStackTrace();
             }
 
-            req.getSession().setAttribute("booklist", booklist);
+            req.getSession().setAttribute("booklist1", booklist);
+
             resp.sendRedirect("bookmanagepage.jsp");
         } else {
             // 修改&增加框
@@ -74,13 +75,15 @@ public class bookmanageservlet extends HttpServlet {
             int borrow_num = 0;
             int receive_num = 0;
 
+            boolean bookdepot = false;
+
             if (bookborrow_numstr != "") {
                 borrow_num = (int) Integer.parseInt(bookborrow_numstr);
             }
             if (bookreceive_numstr != "") {
                 receive_num = (int) Integer.parseInt(bookreceive_numstr);
             }
-            boolean bookdepot = ((int) Integer.parseInt(bookdepotstr) == 1) ? true : false;
+            bookdepot = ((int) Integer.parseInt(bookdepotstr) == 1) ? true : false;
 
             book rebook = null;
 
@@ -111,7 +114,7 @@ public class bookmanageservlet extends HttpServlet {
 
                 // 更新book数据库内容
                 try {
-                    Connection conn=db.getConn();
+                    Connection conn = db.getConn();
                     dao.update_book(conn, rebook);
                     conn.close();
                 } catch (Exception e) {
@@ -120,16 +123,31 @@ public class bookmanageservlet extends HttpServlet {
 
                 // TODO:回传alert提示
 
-
                 resp.sendRedirect("usermanagepage.jsp");
 
             } else {
                 // 选项为增加book，不需要输入bookid
-                
-
-
+                // bookname必填
+                book newbook = new book();
+                if (bookname != "") {
+                    newbook.setBookname(bookname);
+                    newbook.setBorrow_num(borrow_num);
+                    newbook.setReceive_num(receive_num);
+                    newbook.setDepot(bookdepot);
+                    try {
+                        Connection conn = db.getConn();
+                        if (dao.insert_book(conn, newbook)) {
+                            System.out.println("已添加书籍");
+                        }
+                        conn.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("bookname为空,无法添加");
+                }
+                resp.sendRedirect("usermanagepage.jsp");
             }
-
         }
 
     }

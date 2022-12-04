@@ -68,4 +68,14 @@
     <url-pattern>/webpage/jsp-pages/page-jsp/usermanage/usermanageservlet</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>bookmanageservlet</servlet-name>
+    <servlet-class>com.servlet.bookmanageservlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>bookmanageservlet</servlet-name>
+    <url-pattern>/webpage/jsp-pages/page-jsp/bookmanagepage/bookmanageservlet</url-pattern>
+  </servlet-mapping>
+
 </web-app>

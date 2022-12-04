@@ -1,7 +1,7 @@
 package com.servlet;
 
 import com.dao.dao;
-import com.sql.JDBCUtil;
+import com.sql.*;
 import com.user.*;
 
 import java.io.IOException;
@@ -24,10 +24,6 @@ public class loginservlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        // 服务端获取账密
-        // System.out.println(username);
-        // System.out.println(password);
-
         if (username != null && password != null) {
 
             JDBCUtil db = new JDBCUtil();
@@ -46,7 +42,6 @@ public class loginservlet extends HttpServlet {
                     System.out.println("error user");
                     resp.setHeader("refresh", "1;url=./login.html");
                     resp.getWriter().write("<script language=javascript>alert('ERROR USER');</script>");
-                    
                 }
                 conn.close();
             } catch (Exception e) {

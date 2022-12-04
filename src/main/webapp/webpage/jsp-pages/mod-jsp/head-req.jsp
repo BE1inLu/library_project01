@@ -7,6 +7,8 @@
 
     String str1=basePath+"webpage/jsp-pages/page-jsp/usermanage/usermanagepage.jsp";
     String str2=basePath+"webpage/jsp-pages/page-jsp/bookmanagepage/bookmanagepage.jsp";
+    String str3=basePath+"webpage/jsp-pages/page-jsp/booklogmanagepage/booklogmanagepage.jsp";
+
  %>
  
 <div class="head">
@@ -22,7 +24,7 @@
                 <%if(superuser==true){
                     out.write("<li><a href=\""+str1+"\">用户管理</a></li>");
                     out.write("<li><a href=\""+str2+"\">书籍管理</a></li>");
-                    out.write("<li><a href=\"#\">日志修改</a></li>");
+                    out.write("<li><a href=\""+str3+"\">日志修改</a></li>");
                 }%>
                 <li><a href="#">个人资料</a></li>
 

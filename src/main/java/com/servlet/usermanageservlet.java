@@ -132,15 +132,15 @@ public class usermanageservlet extends HttpServlet {
             if(superuser==false&&superuser==true) newuser.setSuperuser(superuser);
 
             // textcode
-            System.out.println("==============");
-            System.out.println("newuserlog");
-            System.out.println("userid:" + newuser.getUserid());
-            System.out.println("username:"+newuser.getUsername());
-            System.out.println("userpassword:" + newuser.getPassword());
-            System.out.println("useremail:" + newuser.getEmail());
-            System.out.println("usertel:" + newuser.getTel());
-            System.out.println("sex:" + newuser.getSex());
-            System.out.println("superuser:" + newuser.getSuperuser());
+            // System.out.println("==============");
+            // System.out.println("newuserlog");
+            // System.out.println("userid:" + newuser.getUserid());
+            // System.out.println("username:"+newuser.getUsername());
+            // System.out.println("userpassword:" + newuser.getPassword());
+            // System.out.println("useremail:" + newuser.getEmail());
+            // System.out.println("usertel:" + newuser.getTel());
+            // System.out.println("sex:" + newuser.getSex());
+            // System.out.println("superuser:" + newuser.getSuperuser());
 
             // 更新user数据库内容
             try {
@@ -154,7 +154,7 @@ public class usermanageservlet extends HttpServlet {
             resp.sendRedirect("usermanagepage.jsp");
 
             // text code
-            System.out.println("servlet结束=========");
+            // System.out.println("servlet结束=========");
         }
     }
 

@@ -248,12 +248,12 @@ public class dao {
         return booklist;
     }
 
-    // book数据库操作--接收书籍名，回传书籍借阅情况，没有就回传全部在库数目
+    // book数据库操作--接收书籍名，回传书籍借阅情况，没有就回传全部书籍
     public List<book> getBook(Connection conn, String bookname) throws Exception {
 
         List<book> listbook = new ArrayList<book>();
         String sql = "select * from book where bookname like ? ";
-        String sql1 = "select * from book where depot=01";
+        String sql1 = "select * from book";
         PreparedStatement pst = null;
 
         if (bookname == "") {
@@ -300,6 +300,10 @@ public class dao {
         return newbook;
     }
 
+    public book getBookmessage(Connection conn,int bookid) throws Exception{
+        return getBook_i(conn, bookid);
+    }
+
     // book数据库操作--判断书本id是否在库&正确，接收bookid，判断depot是否在库，回传depot判断
     public boolean bool_depot(Connection conn, int bookid) throws Exception {
         boolean bool = false;
@@ -315,6 +319,20 @@ public class dao {
     }
 
     // book数据库操作--增加book
+    public boolean insert_book(Connection conn,book book)throws Exception{
+        boolean flag=false;
+        String sql="INSERT INTO book(bookname,`borrow-num`,`receive-num`,depot) VALUE(?,?,?,?)";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, book.getBookname());
+        pst.setInt(2, book.getBorrow_num());
+        pst.setInt(3, book.getReceive_num());
+        pst.setBoolean(4, book.getDepot());
+        int res = pst.executeUpdate();
+        flag=(res>0)?true:false;
+        pst.close();
+
+        return flag;
+    }
     
     // book数据库操作--更新book
     public boolean update_book(Connection conn,book book) throws Exception{

@@ -54,7 +54,7 @@
         %>
 
         <%-- text --%>
-        <div class="item">
+        <%-- <div class="item">
             <span>用户1</span>
             <span>用户名</span>
             <span>用户密码</span>
@@ -82,6 +82,6 @@
             <span>电话</span>
             <span>性别</span>
             <span>false</span>
-        </div>
+        </div> --%>
     </div>
 </div>
